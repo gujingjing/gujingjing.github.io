@@ -103,7 +103,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2017/09/07/Android-相关知识/context">
 <meta property="og:image" content="http://yoursite.com/2017/09/07/Android-相关知识/生命周期图片">
-<meta property="og:updated_time" content="2017-09-07T08:30:52.000Z">
+<meta property="og:updated_time" content="2017-09-08T07:47:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 相关知识">
 <meta name="twitter:description" content="###Context理解context中文意思为上下文，在Android中，context意为场景，一个context说白了就是一组和用户相互交互的过程，像打电话、发短信、看视频等等。 我们在开发中遇到的context有三种：  Application 的context Service 的context Activity 的context  先说下三者之间的联系，首先他们都是继承context的，">
@@ -208,7 +208,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -218,7 +218,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -292,7 +292,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-07T14:31:52+08:00">
                 2017-09-07
@@ -396,6 +396,21 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">1. scheme：整个URI的模式，如常见的http，file等，注意如果URI中没有指定的scheme，那么整个uri无效</div><div class="line">2. host：URI的域名，比如我们常见的www.mi.com,www.baidu.com，与scheme一样，一旦没有host那么整个URI也毫无意义；</div><div class="line">3. port：端口号，比如80，很容易理解，只有在URI中指定了scheme和host之后端口号才是有意义</div><div class="line">4. path，pathPattern，pathPrefix包含路径信息，path表示完整的路径，pathPattern在此基础上可以包含通配符，pathPrefix表示路径的前缀信息</div><div class="line"></div><div class="line">Intent intent = new Intent(&quot;com.leo.a&quot;);</div><div class="line"> intent.addCategory(&quot;com.leo.c&quot;);</div><div class="line"> intent.setDataAndType(Uri.parse(&quot;file://abc&quot;), &quot;text/plain&quot;);</div><div class="line"> startActivity(intent);</div></pre></td></tr></table></figure>
 <p><a href="http://www.jianshu.com/p/7ebc63399968" target="_blank" rel="external">参考文章</a></p>
 <p>###IPC：Serialzable、Parcelable、Binder、Socket</p>
+<p>#####AIDL案例测试<br>aidl 全名，android interface definition language,是用来实现多进程之间的通信。<br>进程间通信，一端视为服务端service,提供相应数据或方法的调用,一端视为客户端，主动调用服务端的数据和方法，创建aidl分为如下几个步骤</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">1. service端创建一个aidl文件，里面写好提供给客户端的借口</div><div class="line">	- 如果其中涉及到非基础类型的参数，需要再添加一个aidl文件，xxx.aidl和xxx.java 名字和包名要一样,然后倒入到需要的aidl文件中</div><div class="line">	- 实现可序列化对象，例如parcelable,需要多添加一个方法readFromParcel()方法</div><div class="line">2. service端添加一个service服务</div><div class="line">	- 服务需要在manifest中声明</div><div class="line">		- export=true</div><div class="line">		- 添加intentFilter(包含action,scheme可选)</div><div class="line">	- 在service中实现,刚刚创建的aidl文件的stub接口</div><div class="line">	- 在service 的onbind()方法中，将刚刚实现的对象传入返回</div><div class="line">3. 客户端首先要将服务端的aidl文件拷贝过来</div><div class="line">	- 包含使用到的非基础类型的类对象</div><div class="line">	- 拷贝过来的aidl文件必须和service中包名一样</div><div class="line">		- 原来service中aidl在哪个包下，考过来也要放在哪个包下,包名要保证一样</div><div class="line">	- 在需要使用的界面绑定服务,拿到aidl接口的服务端实例</div><div class="line">		- bindservice(intent,connection,tag)</div><div class="line">			- 在5.0之后只能使用显意图</div><div class="line">				- intent.setAction(string action)</div><div class="line">				注意:action要和服务端注册的action想匹配</div><div class="line">				- intent.setpackage(string package)</div><div class="line">			- 实现serviceConnection接口，在连接之后，拿到aidl接口对象</div><div class="line">			- 有了对象实例，就可以为所欲为了啊</div></pre></td></tr></table></figure>
+<p>aidl的学习主要是参考了<a href="https://juejin.im/entry/579320241532bc0060c7e420" target="_blank" rel="external">学习 AIDL，这一篇文章就够了 (上)</a>，跟着这篇文章的心理历程自己玩一遍对aidl的理解会更加的深刻</p>
+<p>#####序列化、反序列化<br>由于系统底层数据的传输都是简单的字节序列，在底层系统不认识对象，它只认识字节，所以要实现进程间通信，就需要先将对象转化为字节序列，这就是序列化的过程。相反的，当字节序列运行到想对应的进程的时候，需要将字节序列转化为对象，这就是反序列化的过程。</p>
+<p>#####Serializable接口<br>serializable是java提供的一个空接口，使用的时候很简单，只需要在对象上实现这个空接口就好。<br>它的内部是将对象写入本地磁盘，通过ObjectOutputString和ObjectInputStrem</p>
+<blockquote>
+<p>//实例化User类<br>        User user =new User(1,”TestName”,”example@126.com”);<br>        //序列化过程<br>        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(“test.txt”));<br>        objectOutputStream.writeObject(user);<br>        objectOutputStream.close();<br>        System.out.println(“序列化成功！”);<br>        //反序列化过程<br>        ObjectInputStream objectInputStream =new ObjectInputStream(new FileInputStream(“test.txt”));<br>        User newUser = (User) objectInputStream.readObject();<br>        objectInputStream.close();<br>        System.out.println(“反序列化成功！”);</p>
+</blockquote>
+<p>#####Parcelable<br>parcelable是android提供的序列化接口,主要是将对象存储在内存中。实现起来相对比较复杂，推荐使用studio的parcelable插件生成。</p>
+<p><strong>两者之间的比较</strong></p>
+<ol>
+<li>两者都是支持序列化和反序列化的操作，区别在于，存储媒介的不同</li>
+<li>serializable将序列化后的数据存储在磁盘中，需要进行大量的io操作</li>
+<li>parcelable则是将序列化之后的数据存储在内存中，效率比serializable高</li>
+</ol>
 
       
     </div>
@@ -497,7 +512,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -551,7 +566,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
