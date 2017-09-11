@@ -203,7 +203,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -213,7 +213,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -289,7 +289,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-11T14:29:22+08:00">
                 2017-09-11
@@ -332,12 +332,43 @@
         
           
             <p>先说说我们平时看见的手机屏幕都包含哪些试图吧<br><img src="http://img.blog.csdn.net/20150528211309106" alt="手机屏幕view图片"></p>
-<p>本篇主要简单的描述下，我们所看见的手机屏幕上展示的view</p>
+<p>Activity界面中的有一个成员window,它的实例化对象是PhoneWindow。<br>这里简单说明下这些类：</p>
+<pre><code>- window是一个抽象接口
+- PhoneWindow是window的实例对象
+    - 内部包含了一个DecorView,decorView是所有应用窗口(Activity界面)的根布局
+    - decorView是PhoneWindow的内部类,本质上是一个FrameLayout
+    - decorView中只包含了一个LinearLayout(垂直的)
+    - 垂直的linearLayout只包含了两个view,一个是titleBar,一个是id为content的FramLayout
+    - 我们setContentView布局实际上就算添加到了content 的FramLayout中了
+</code></pre><p>整体如下图<br><img src="http://img.blog.csdn.net/20150526104647053" alt=""></p>
+<p>###视图的绘制流程<br>每一个视图的绘制过程都必须经过三个步骤:onMeasure()、onLayout()、onDraw()</p>
+<p>#####onMeasure()<br>试图的measure测量实际是，从顶层父类view向子view递归调用mesure(里面又调用onMeasure()方法)<br>的过程</p>
+<blockquote>
+<p>MeasureSpec（View的内部类）测量规格为int型，值由高2位规格模式specMode和低30位具体尺寸specSize组成。其中specMode只有三种值：</p>
+<p>MeasureSpec.EXACTLY //确定模式，父View希望子View的大小是确定的，由specSize决定；<br>MeasureSpec.AT_MOST //最多模式，父View希望子View的大小最多是specSize指定的值；<br>MeasureSpec.UNSPECIFIED //未指定模式，父View完全依据子View的设计值来决定；</p>
+<p>view 的measure 是final，不能重载，所以view 只能调用onMeasure()<br>view 的getMeasuredWidth()和getMeasuredHeight()来获取view的宽高,但是只能在onMeasure()之后，才能正常的获取到</p>
+</blockquote>
+<p>#####layout()<br>和mesure类似,layout也是从顶层父类向子类递归调用了layout()方法,通过上一步onMeasure()获取子类的大小，将子类放在合适的位置</p>
+<blockquote>
+<p>View.layout方法可被重载，ViewGroup.layout为final的不可重载，ViewGroup.onLayout为abstract的，子类必须重载实现自己的位置逻辑。</p>
+<p>measure操作完成后得到的是对每个View经测量过的measuredWidth和measuredHeight，layout操作完成之后得到的是对每个View进行位置分配后的mLeft、mTop、mRight、mBottom，这些值都是相对于父View来说的。</p>
+<p>凡是layout_XXX的布局属性基本都针对的是包含子View的ViewGroup的，当对一个没有父容器的View设置相关layout_XXX属性是没有任何意义的。</p>
+<p>使用View的getWidth()和getHeight()方法来获取View测量的宽高，必须保证这两个方法在onLayout流程之后被调用才能返回有效值。</p>
+</blockquote>
+<p>#####onDraw()<br>绘制过程就是把view对象绘制到屏幕上,整个draw过程，需要注意如下细节:</p>
+<blockquote>
+<p>如果该View是一个ViewGroup，则需要递归绘制其所包含的所有子View。</p>
+<p>View默认不会绘制任何内容，真正的绘制都需要自己在子类中实现。</p>
+<p>View的绘制是借助onDraw方法传入的Canvas类来进行的。</p>
+<p>区分View动画和ViewGroup布局动画，前者指的是View自身的动画，可以通过setAnimation添加，后者是专门针对ViewGroup显示内部子视图时设置的动画，可以在xml布局文件中对ViewGroup设置layoutAnimation属性（譬如对LinearLayout设置子View在显示时出现逐行、随机、下等显示等不同动画效果）。</p>
+<p>在获取画布剪切区（每个View的draw中传入的Canvas）时会自动处理掉padding，子View获取Canvas不用关注这些逻辑，只用关心如何绘制即可。</p>
+<p>默认情况下子View的ViewGroup.drawChild绘制顺序和子View被添加的顺序一致，但是你也可以重载ViewGroup.getChildDrawingOrder()方法提供不同顺序。</p>
+</blockquote>
 <p>参考文档:</p>
 <p><a href="http://www.jianshu.com/p/5dad5d27588d" target="_blank" rel="external">Android Tools 之一 Hierarchy Viewer</a></p>
+<p><a href="http://blog.csdn.net/yanbober/article/details/46128379" target="_blank" rel="external">Android应用层View绘制流程与源码分析</a></p>
 <p><a href="http://blog.csdn.net/yanbober/article/details/45970721" target="_blank" rel="external">Android应用setContentView与LayoutInflater加载解析机制源码分析</a></p>
 <p><a href="http://www.jianshu.com/p/060b5f68da79" target="_blank" rel="external">深入理解Android之View的绘制流程</a></p>
-<p><a href="http://blog.csdn.net/yanbober/article/details/46128379" target="_blank" rel="external">Android应用层View绘制流程与源码分析</a></p>
 <p><a href="http://blog.csdn.net/guolin_blog/article/details/16330267" target="_blank" rel="external">Android视图绘制流程完全解析，带你一步步深入了解View二</a></p>
 
           
@@ -416,7 +447,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-08T18:19:45+08:00">
                 2017-09-08
@@ -693,7 +724,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-08T15:57:24+08:00">
                 2017-09-08
@@ -813,7 +844,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-07T14:31:52+08:00">
                 2017-09-07
@@ -1012,7 +1043,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-06T09:36:56+08:00">
                 2017-09-06
@@ -1160,7 +1191,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">5</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -1214,11 +1245,11 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
-  Theme -
+  Thème -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Muse
   </a>
