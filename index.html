@@ -331,7 +331,162 @@
       
         
           
-            <p>###View事件体系<br><a href="https://www.kancloud.cn/kancloud/art-of-android-development-reading-notes/90448" target="_blank" rel="external"> View的事件体系</a></p>
+            <p>###View事件event<br>什么是事件，当用户触摸屏幕的时候，就会产生一个事件event</p>
+<blockquote>
+<p>事件相关的细节(发生触摸的位置、时间、历史记录、手势动作等都封装在MotionEvent中)</p>
+</blockquote>
+<p>touch事件有如下四种:</p>
+<ol>
+<li>MotionEvent.ACTION_DOWN：按下View（所有事件的开始）</li>
+<li>MotionEvent.ACTION_MOVE：滑动View</li>
+<li>MotionEvent.ACTION_CANCEL：非人为原因结束本次事件</li>
+<li>MotionEvent.ACTION_UP：抬起View（与DOWN对应）</li>
+</ol>
+<p><strong>事件列表</strong><br>android 事件从产生到结束一共经过如下这几个过程</p>
+<ul>
+<li>用户按下view-&gt;actiondown-按下</li>
+<li>用户滑动view-&gt;actionmove-移动</li>
+<li>用户抬起手-&gt;actionup-抬起   结束</li>
+</ul>
+<p>###事件的分发机制<br>android 事件分发主要有三个方法控制:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. onDispatchTouchEvent()   事件的分发</div><div class="line">2. onInterceptTochEvent()	 事件的拦截</div><div class="line">3. onTouchEvent()		事件的消费</div></pre></td></tr></table></figure>
+<p>#####onDispatchTouchEvent() 事件的分发</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作用对象</td>
+<td>Activity、ViewGroup、View</td>
+</tr>
+<tr>
+<td>作用</td>
+<td>分发点击事件</td>
+</tr>
+<tr>
+<td>调用时刻</td>
+<td>当点击事件能够传递给当前对象的时候，就会调用该方法</td>
+</tr>
+<tr>
+<td>返回结果</td>
+<td>是否消费当前事件:详细情况如下</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回super.dispatchTouchEvent(ev) 表示调用父类中的方法</strong></p>
+<ol>
+<li>返回true 表示<ul>
+<li>消费这个事件</li>
+<li>事件不会向下传递</li>
+<li>后续的(move、up)会继续分发给该view</li>
+</ul>
+</li>
+<li>返回false 表示<ul>
+<li>不消费这个事件</li>
+<li>事件也不会向下传递</li>
+<li>将事件回传给父类的onTouchEvent()</li>
+<li>后续的(move、up)会继续分发给该view</li>
+</ul>
+</li>
+</ol>
+<p><strong>注意: 有一个特例: 在activity中，onDispatchTouchEvent()返回false的时候，表示消费事件</strong></p>
+<p>#####onTouchEvent()</p>
+<blockquote>
+<p>onTouchEvetn与onDispatchTouchEvent()类似</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作用对象</td>
+<td>Activity、ViewGroup、View</td>
+</tr>
+<tr>
+<td>作用</td>
+<td>处理点击事件</td>
+</tr>
+<tr>
+<td>调用时刻</td>
+<td>在onDispatchTouchEvent()内部调用</td>
+</tr>
+<tr>
+<td>返回结果</td>
+<td>是否消费处理当前事件:详细情况如下</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><p>返回true</p>
+<ul>
+<li>自己消费处理事件</li>
+<li>事件停止传递</li>
+<li>后续事件也由自己处理</li>
+</ul>
+</li>
+<li><p>返回false</p>
+<ul>
+<li>不处理消费事件</li>
+<li>事件向上传递给父类的onTouchEvent()处理</li>
+<li>当前view不再接受处理其他事件(move、up)</li>
+</ul>
+</li>
+</ol>
+<p>#####onDispatchTouchEvent()</p>
+<p><strong>onDispatchTouchEvent只有GroupView才有此方法</strong></p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作用对象</td>
+<td>ViewGroup(注:Activity、View中都没有)</td>
+</tr>
+<tr>
+<td>作用</td>
+<td>处理拦截事件</td>
+</tr>
+<tr>
+<td>调用时刻</td>
+<td>ViewGroup中onDispatchTouchEvent()内部调用</td>
+</tr>
+<tr>
+<td>返回结果</td>
+<td>是否拦截当前事件:详细情况如下</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><p>返回true</p>
+<ul>
+<li>拦截事件</li>
+<li>事件不会向下传递</li>
+<li>自己处理事件，即调用自己的onTouchEvent()</li>
+<li>同一个事件列中的事件都由该事件处理</li>
+</ul>
+</li>
+<li><p>返回false</p>
+<ul>
+<li>不拦截事件</li>
+<li>事件会向下传递</li>
+<li>事件传递到子view，调用子view的onDispatchTouchEvent()处理</li>
+<li>当前view任然接受其他事件(<strong>和onTouchEvent()不同</strong>)</li>
+</ul>
+</li>
+</ol>
+<p>参考<a href="https://www.kancloud.cn/kancloud/art-of-android-development-reading-notes/90448" target="_blank" rel="external"> View的事件体系</a></p>
 
           
         
