@@ -203,7 +203,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -213,7 +213,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -260,6 +260,208 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/Android-相关知识/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gujingjing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gujingjing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/07/Android-相关知识/" itemprop="url">Android 相关知识</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-07T14:31:52+08:00">
+                2017-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>###Context理解<br>context中文意思为上下文，在Android中，context意为场景，一个context说白了就是一组和用户相互交互的过程，像打电话、发短信、看视频等等。</p>
+<p>我们在开发中遇到的context有三种：</p>
+<ol>
+<li>Application 的context</li>
+<li>Service 的context</li>
+<li>Activity 的context</li>
+</ol>
+<p>先说下三者之间的联系，首先他们都是继承context的，appliction和service 都是继承contextWrapper,它是contextImp的实现类。<br>activity 它继承的是contextThemWraper-&gt;继承contextWraper</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1338260-27163e8fe7c171f8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>三者之间的作用域不同:</p>
+<ul>
+<li>application 作用于整个应用程序</li>
+<li>service 所用于开启的服务中</li>
+<li>activity 作用在这个开启的界面中</li>
+</ul>
+<p>###Activity生命周期、启动模式、IntentFilter匹配规则</p>
+<p>####Android 生命周期<br><img src="http://hi.csdn.net/attachment/201007/28/0_12803210018q71.gif" alt="生命周期图片"></p>
+<p>一张图了解Android 的生命周期</p>
+<p><strong>注意</strong></p>
+<p>这里有一个横竖屏的时候生命周期的切换和android:configChanges属性有关，</p>
+<p><a href="http://android.tgbus.com/Android/tutorial/201103/346550.shtml" target="_blank" rel="external">参考如下</a></p>
+<p>####启动模式</p>
+<ol>
+<li>standerd标准启动模式<ul>
+<li>先进后出</li>
+</ul>
+</li>
+<li>singleTop单一顶部模式<ul>
+<li>顶部永远保持一个，不可能顶部连续两个一样的activity</li>
+</ul>
+</li>
+<li>singleTask栈唯一模式<ul>
+<li>在一个任务栈中，有且只有一个activity</li>
+<li>启动这个activity,它上面的所有界面都关闭，该activity返回到栈顶，否则新建一个</li>
+</ul>
+</li>
+<li>singleInstance唯一模式<ul>
+<li>启动这个activity，会重新开启一个新栈，并且栈中有且只有这一个界面</li>
+</ul>
+</li>
+</ol>
+<p>####IntentFilter匹配规则</p>
+<p>显示跳转</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Intent mIntent = new Intent();  </div><div class="line">mIntent.setClassName(&quot;com.android.settings&quot;,&quot;com.android.settings.Settings&quot;);</div><div class="line">或者这个</div><div class="line">Intent intent = new Intent(mContext, XXActivity.class); </div><div class="line"> </div><div class="line">mContext.startActivity(mIntent);</div></pre></td></tr></table></figure>
+<p>隐示跳转</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/创建一个隐式的 Intent 对象：Action 动作  </div><div class="line">Intent intent = new Intent();  </div><div class="line">//设置 Intent 的动作为清单中指定的action  </div><div class="line">intent.setAction(&quot;customer_action_here&quot;);  </div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+<p>IntentFilter中过滤信息包含 action 、categary、data<br><strong>匹配的规则</strong></p>
+<ol>
+<li>同时匹配过滤表中的action、categary、data</li>
+<li>每个过滤表中可以有多个action、categary、data 并各自构成不同的类别，一个intent要同时匹配action类别、categary类别、data类别,才能够完全匹配</li>
+<li>一个activity有多组intentFilter,一个intent只要完全匹配一组intentFilter就算匹配成功</li>
+</ol>
+<p>#####action匹配规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. intent中必须包含action,这个和categary不同</div><div class="line">2. action中字符串严格区分大小写，intent中action必须和过滤规则中的action完全一样才能匹配成功</div><div class="line">3. 匹配规则中可以有多个action,intent只需要和其中一个action匹配即可</div></pre></td></tr></table></figure>
+<p>#####categary匹配规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. 匹配规则中如果没有categary会默认添加一个默认的,android.intent.category.DEFAULT</div><div class="line">2. intent中可以不设置categary,默认会自动添加</div><div class="line">3. intent中可以设置多个categary,但是每个categary都必须和匹配规则中的某一天匹配才能匹配成功</div></pre></td></tr></table></figure>
+<p>#####data匹配规则</p>
+<p><strong>data的数据结构</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;data android:scheme=&quot;string&quot;</div><div class="line">      android:host=&quot;string&quot;</div><div class="line">      android:port=&quot;80&quot;</div><div class="line">      android:path=&quot;/string&quot;</div><div class="line">      android:pathPattern=&quot;string&quot;</div><div class="line">      android:pathPrefix=&quot;/string&quot;</div><div class="line">      android:mimeType=&quot;text/plain&quot;/&gt;</div></pre></td></tr></table></figure>
+<p>总的来说包含两个部分,mimeType、uri<br>mimeType表示image/ipeg,video/*等媒体类型</p>
+<p>URI信息量相对大一点，其结构一般为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;scheme&gt;://&lt;host&gt;:&lt;port&gt;/[&lt;path&gt;|&lt;pathPrefix|&lt;pathPattern&gt;&gt;]</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">1. scheme：整个URI的模式，如常见的http，file等，注意如果URI中没有指定的scheme，那么整个uri无效</div><div class="line">2. host：URI的域名，比如我们常见的www.mi.com,www.baidu.com，与scheme一样，一旦没有host那么整个URI也毫无意义；</div><div class="line">3. port：端口号，比如80，很容易理解，只有在URI中指定了scheme和host之后端口号才是有意义</div><div class="line">4. path，pathPattern，pathPrefix包含路径信息，path表示完整的路径，pathPattern在此基础上可以包含通配符，pathPrefix表示路径的前缀信息</div><div class="line"></div><div class="line">Intent intent = new Intent(&quot;com.leo.a&quot;);</div><div class="line"> intent.addCategory(&quot;com.leo.c&quot;);</div><div class="line"> intent.setDataAndType(Uri.parse(&quot;file://abc&quot;), &quot;text/plain&quot;);</div><div class="line"> startActivity(intent);</div></pre></td></tr></table></figure>
+<p><a href="http://www.jianshu.com/p/7ebc63399968" target="_blank" rel="external">参考文章</a></p>
+<p>###IPC：Serialzable、Parcelable、Binder、Socket</p>
+<p>#####AIDL案例测试<br>aidl 全名，android interface definition language,是用来实现多进程之间的通信。<br>进程间通信，一端视为服务端service,提供相应数据或方法的调用,一端视为客户端，主动调用服务端的数据和方法，创建aidl分为如下几个步骤</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">1. service端创建一个aidl文件，里面写好提供给客户端的借口</div><div class="line">	- 如果其中涉及到非基础类型的参数，需要再添加一个aidl文件，xxx.aidl和xxx.java 名字和包名要一样,然后倒入到需要的aidl文件中</div><div class="line">	- 实现可序列化对象，例如parcelable,需要多添加一个方法readFromParcel()方法</div><div class="line">2. service端添加一个service服务</div><div class="line">	- 服务需要在manifest中声明</div><div class="line">		- export=true</div><div class="line">		- 添加intentFilter(包含action,scheme可选)</div><div class="line">	- 在service中实现,刚刚创建的aidl文件的stub接口</div><div class="line">	- 在service 的onbind()方法中，将刚刚实现的对象传入返回</div><div class="line">3. 客户端首先要将服务端的aidl文件拷贝过来</div><div class="line">	- 包含使用到的非基础类型的类对象</div><div class="line">	- 拷贝过来的aidl文件必须和service中包名一样</div><div class="line">		- 原来service中aidl在哪个包下，考过来也要放在哪个包下,包名要保证一样</div><div class="line">	- 在需要使用的界面绑定服务,拿到aidl接口的服务端实例</div><div class="line">		- bindservice(intent,connection,tag)</div><div class="line">			- 在5.0之后只能使用显意图</div><div class="line">				- intent.setAction(string action)</div><div class="line">				注意:action要和服务端注册的action想匹配</div><div class="line">				- intent.setpackage(string package)</div><div class="line">			- 实现serviceConnection接口，在连接之后，拿到aidl接口对象</div><div class="line">			- 有了对象实例，就可以为所欲为了啊</div></pre></td></tr></table></figure>
+<p>aidl的学习主要是参考了<a href="https://juejin.im/entry/579320241532bc0060c7e420" target="_blank" rel="external">学习 AIDL，这一篇文章就够了 (上)</a>，跟着这篇文章的心理历程自己玩一遍对aidl的理解会更加的深刻</p>
+<p>#####序列化、反序列化<br>由于系统底层数据的传输都是简单的字节序列，在底层系统不认识对象，它只认识字节，所以要实现进程间通信，就需要先将对象转化为字节序列，这就是序列化的过程。相反的，当字节序列运行到想对应的进程的时候，需要将字节序列转化为对象，这就是反序列化的过程。</p>
+<p>#####Serializable接口<br>serializable是java提供的一个空接口，使用的时候很简单，只需要在对象上实现这个空接口就好。<br>它的内部是将对象写入本地磁盘，通过ObjectOutputString和ObjectInputStrem</p>
+<blockquote>
+<p>//实例化User类<br>        User user =new User(1,”TestName”,”example@126.com”);<br>        //序列化过程<br>        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(“test.txt”));<br>        objectOutputStream.writeObject(user);<br>        objectOutputStream.close();<br>        System.out.println(“序列化成功！”);<br>        //反序列化过程<br>        ObjectInputStream objectInputStream =new ObjectInputStream(new FileInputStream(“test.txt”));<br>        User newUser = (User) objectInputStream.readObject();<br>        objectInputStream.close();<br>        System.out.println(“反序列化成功！”);</p>
+</blockquote>
+<p>#####Parcelable<br>parcelable是android提供的序列化接口,主要是将对象存储在内存中。实现起来相对比较复杂，推荐使用studio的parcelable插件生成。</p>
+<p><strong>两者之间的比较</strong></p>
+<ol>
+<li>两者都是支持序列化和反序列化的操作，区别在于，存储媒介的不同</li>
+<li>serializable将序列化后的数据存储在磁盘中，需要进行大量的io操作</li>
+<li>parcelable则是将序列化之后的数据存储在内存中，效率比serializable高</li>
+</ol>
+<p>###Android View事件体系<br>参考我之前写的<a href="https://gujingjing.github.io/2017/09/08/android-%E4%BA%8B%E4%BB%B6%E4%BD%93%E7%B3%BB/" target="_blank" rel="external">Android View相关知识</a></p>
+<p>###Android 事件绘制</p>
+<p>参考之前写的<a href="https://gujingjing.github.io/2017/09/11/View%E7%BB%98%E5%88%B6%E6%B5%81%E7%A8%8B/" target="_blank" rel="external">Android事件绘制</a></p>
+<p>###Activity启动、工作流程</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/06/glide记录/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -289,7 +491,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-06T09:36:56+08:00">
                 2017-09-06
@@ -440,8 +642,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -495,7 +697,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
