@@ -94,20 +94,17 @@
 
 
 
-<meta name="description" content="先说说我们平时看见的手机屏幕都包含哪些试图吧 Activity界面中的有一个成员window,它的实例化对象是PhoneWindow。这里简单说明下这些类： - window是一个抽象接口 - PhoneWindow是window的实例对象     - 内部包含了一个DecorView,decorView是所有应用窗口(Activity界面)的根布局     - decorView是PhoneWi">
+<meta name="description" content="引用自Hexo常用指令  npm install hexo -g #安装npm update hexo -g #升级hexo init #初始化   初始化 init  hexo init   创建一个新的文件  hexo new xxx   生成静态文件generate  hexo generate 简写hexo g一般生成静态文件和发布配合使用 |选项|描述||—|—||-d, –deploy">
 <meta property="og:type" content="article">
-<meta property="og:title" content="View绘制流程">
-<meta property="og:url" content="http://yoursite.com/2017/09/11/View绘制流程/index.html">
+<meta property="og:title" content="Hexo常用命令">
+<meta property="og:url" content="http://yoursite.com/2018/08/01/Hexo常用命令/index.html">
 <meta property="og:site_name" content="gujingjing">
-<meta property="og:description" content="先说说我们平时看见的手机屏幕都包含哪些试图吧 Activity界面中的有一个成员window,它的实例化对象是PhoneWindow。这里简单说明下这些类： - window是一个抽象接口 - PhoneWindow是window的实例对象     - 内部包含了一个DecorView,decorView是所有应用窗口(Activity界面)的根布局     - decorView是PhoneWi">
+<meta property="og:description" content="引用自Hexo常用指令  npm install hexo -g #安装npm update hexo -g #升级hexo init #初始化   初始化 init  hexo init   创建一个新的文件  hexo new xxx   生成静态文件generate  hexo generate 简写hexo g一般生成静态文件和发布配合使用 |选项|描述||—|—||-d, –deploy">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://img.blog.csdn.net/20150528211309106">
-<meta property="og:image" content="http://img.blog.csdn.net/20150526104647053">
-<meta property="og:updated_time" content="2017-09-11T10:16:23.000Z">
+<meta property="og:updated_time" content="2018-08-01T03:07:11.920Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="View绘制流程">
-<meta name="twitter:description" content="先说说我们平时看见的手机屏幕都包含哪些试图吧 Activity界面中的有一个成员window,它的实例化对象是PhoneWindow。这里简单说明下这些类： - window是一个抽象接口 - PhoneWindow是window的实例对象     - 内部包含了一个DecorView,decorView是所有应用窗口(Activity界面)的根布局     - decorView是PhoneWi">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20150528211309106">
+<meta name="twitter:title" content="Hexo常用命令">
+<meta name="twitter:description" content="引用自Hexo常用指令  npm install hexo -g #安装npm update hexo -g #升级hexo init #初始化   初始化 init  hexo init   创建一个新的文件  hexo new xxx   生成静态文件generate  hexo generate 简写hexo g一般生成静态文件和发布配合使用 |选项|描述||—|—||-d, –deploy">
 
 
 
@@ -136,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/11/View绘制流程/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/01/Hexo常用命令/"/>
 
 
 
 
 
-  <title>View绘制流程 | gujingjing</title>
+  <title>Hexo常用命令 | gujingjing</title>
   
 
 
@@ -265,7 +262,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/11/View绘制流程/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/01/Hexo常用命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gujingjing">
@@ -282,7 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">View绘制流程</h1>
+          <h1 class="post-title" itemprop="name headline">Hexo常用命令</h1>
         
 
         <div class="post-meta">
@@ -294,8 +291,8 @@
               
                 <span class="post-meta-item-text">Posté le</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-11T14:29:22+08:00">
-                2017-09-11
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-01T10:48:46+08:00">
+                2018-08-01
               </time>
             
 
@@ -332,45 +329,56 @@
       
 
       
-        <p>先说说我们平时看见的手机屏幕都包含哪些试图吧<br><img src="http://img.blog.csdn.net/20150528211309106" alt="手机屏幕view图片"></p>
-<p>Activity界面中的有一个成员window,它的实例化对象是PhoneWindow。<br>这里简单说明下这些类：</p>
-<pre><code>- window是一个抽象接口
-- PhoneWindow是window的实例对象
-    - 内部包含了一个DecorView,decorView是所有应用窗口(Activity界面)的根布局
-    - decorView是PhoneWindow的内部类,本质上是一个FrameLayout
-    - decorView中只包含了一个LinearLayout(垂直的)
-    - 垂直的linearLayout只包含了两个view,一个是titleBar,一个是id为content的FramLayout
-    - 我们setContentView布局实际上就算添加到了content 的FramLayout中了
-</code></pre><p>整体如下图<br><img src="http://img.blog.csdn.net/20150526104647053" alt=""></p>
-<p>###视图的绘制流程<br>每一个视图的绘制过程都必须经过三个步骤:onMeasure()、onLayout()、onDraw()</p>
-<p>#####onMeasure()<br>试图的measure测量实际是，从顶层父类view向子view递归调用mesure(里面又调用onMeasure()方法)<br>的过程</p>
+        <p>引用自<a href="https://hexo.io/zh-cn/docs/commands.html" target="_blank" rel="external">Hexo常用指令</a></p>
 <blockquote>
-<p>MeasureSpec（View的内部类）测量规格为int型，值由高2位规格模式specMode和低30位具体尺寸specSize组成。其中specMode只有三种值：</p>
-<p>MeasureSpec.EXACTLY //确定模式，父View希望子View的大小是确定的，由specSize决定；<br>MeasureSpec.AT_MOST //最多模式，父View希望子View的大小最多是specSize指定的值；<br>MeasureSpec.UNSPECIFIED //未指定模式，父View完全依据子View的设计值来决定；</p>
-<p>view 的measure 是final，不能重载，所以view 只能调用onMeasure()<br>view 的getMeasuredWidth()和getMeasuredHeight()来获取view的宽高,但是只能在onMeasure()之后，才能正常的获取到</p>
+<p>npm install hexo -g #安装<br>npm update hexo -g #升级<br>hexo init #初始化</p>
 </blockquote>
-<p>#####layout()<br>和mesure类似,layout也是从顶层父类向子类递归调用了layout()方法,通过上一步onMeasure()获取子类的大小，将子类放在合适的位置</p>
+<ol>
+<li><p>初始化 init</p>
+<ul>
+<li>hexo init</li>
+</ul>
+</li>
+<li><p>创建一个新的文件</p>
+<ul>
+<li>hexo new xxx</li>
+</ul>
+</li>
+<li><p>生成静态文件generate</p>
+<ul>
+<li>hexo generate</li>
+<li><p>简写hexo g<br>一般生成静态文件和发布配合使用</p>
+<p>|选项|描述|<br>|—|—|<br>|-d, –deploy|文件生成后立即部署网站|<br>|-w, –watch    |监视文件变动|</p>
+</li>
+</ul>
+</li>
+<li><p>启动服务器server</p>
+<ul>
+<li>hexo server</li>
+<li><p>启动服务器。默认情况下，访问网址为： <a href="http://localhost:4000/。" target="_blank" rel="external">http://localhost:4000/。</a></p>
+<p>|选项|    描述|<br>|—|—|<br>|-p, –port|    重设端口|<br>|-s, –static    |只使用静态文件|<br>|-l, –log|    启动日记记录，使用覆盖记录格式|</p>
+</li>
+</ul>
+</li>
+<li><p>发布、部署 deploy</p>
+<ul>
+<li>hexo deploy</li>
+<li><p>简写 hexo d</p>
+<p>|参数|    描述|<br>|—|—|<br>|-g, –generate    |部署之前预先生成静态文件|</p>
+</li>
+</ul>
+</li>
+</ol>
+<ol>
+<li>清除缓存 clean<ul>
+<li>hexo clean</li>
+</ul>
+</li>
+</ol>
 <blockquote>
-<p>View.layout方法可被重载，ViewGroup.layout为final的不可重载，ViewGroup.onLayout为abstract的，子类必须重载实现自己的位置逻辑。</p>
-<p>measure操作完成后得到的是对每个View经测量过的measuredWidth和measuredHeight，layout操作完成之后得到的是对每个View进行位置分配后的mLeft、mTop、mRight、mBottom，这些值都是相对于父View来说的。</p>
-<p>凡是layout_XXX的布局属性基本都针对的是包含子View的ViewGroup的，当对一个没有父容器的View设置相关layout_XXX属性是没有任何意义的。</p>
-<p>使用View的getWidth()和getHeight()方法来获取View测量的宽高，必须保证这两个方法在onLayout流程之后被调用才能返回有效值。</p>
+<p>清除缓存文件 (db.json) 和已生成的静态文件 (public)。</p>
+<p>在某些情况（尤其是更换主题后），如果发现您对站点的更改无论如何也不生效，您可能需要运行该命令。</p>
 </blockquote>
-<p>#####onDraw()<br>绘制过程就是把view对象绘制到屏幕上,整个draw过程，需要注意如下细节:</p>
-<blockquote>
-<p>如果该View是一个ViewGroup，则需要递归绘制其所包含的所有子View。</p>
-<p>View默认不会绘制任何内容，真正的绘制都需要自己在子类中实现。</p>
-<p>View的绘制是借助onDraw方法传入的Canvas类来进行的。</p>
-<p>区分View动画和ViewGroup布局动画，前者指的是View自身的动画，可以通过setAnimation添加，后者是专门针对ViewGroup显示内部子视图时设置的动画，可以在xml布局文件中对ViewGroup设置layoutAnimation属性（譬如对LinearLayout设置子View在显示时出现逐行、随机、下等显示等不同动画效果）。</p>
-<p>在获取画布剪切区（每个View的draw中传入的Canvas）时会自动处理掉padding，子View获取Canvas不用关注这些逻辑，只用关心如何绘制即可。</p>
-<p>默认情况下子View的ViewGroup.drawChild绘制顺序和子View被添加的顺序一致，但是你也可以重载ViewGroup.getChildDrawingOrder()方法提供不同顺序。</p>
-</blockquote>
-<p>参考文档:</p>
-<p><a href="http://www.jianshu.com/p/5dad5d27588d" target="_blank" rel="external">Android Tools 之一 Hierarchy Viewer</a></p>
-<p><a href="http://blog.csdn.net/yanbober/article/details/46128379" target="_blank" rel="external">Android应用层View绘制流程与源码分析</a></p>
-<p><a href="http://blog.csdn.net/yanbober/article/details/45970721" target="_blank" rel="external">Android应用setContentView与LayoutInflater加载解析机制源码分析</a></p>
-<p><a href="http://www.jianshu.com/p/060b5f68da79" target="_blank" rel="external">深入理解Android之View的绘制流程</a></p>
-<p><a href="http://blog.csdn.net/guolin_blog/article/details/16330267" target="_blank" rel="external">Android视图绘制流程完全解析，带你一步步深入了解View二</a></p>
 
       
     </div>
@@ -395,8 +403,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/08/android-事件体系/" rel="next" title="android 事件体系">
-                <i class="fa fa-chevron-left"></i> android 事件体系
+              <a href="/2018/03/01/flex布局/" rel="next" title="flex布局">
+                <i class="fa fa-chevron-left"></i> flex布局
               </a>
             
           </div>
@@ -404,10 +412,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/22/Android-Binder/" rel="prev" title="Android Binder学习">
-                Android Binder学习 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

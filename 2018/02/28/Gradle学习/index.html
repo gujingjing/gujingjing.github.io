@@ -94,17 +94,17 @@
 
 
 
-<meta name="description" content="Gradle学习掌握Android Gradle 1.Gradle源码查看gradle 源码位置在src中，例如  /Users/jingjinggu/.gradle/wrapper/dists/gradle-4.1-all/bzyivzo6n839fup2jbap0tjew/gradle-4.1 在本地新建一个java工程，导入源码，配合注释查看学习">
+<meta name="description" content="掌握Android Gradle 1.Gradle源码查看gradle 源码位置在src中，例如  /Users/jingjinggu/.gradle/wrapper/dists/gradle-4.1-all/bzyivzo6n839fup2jbap0tjew/gradle-4.1 在本地新建一个java工程，导入源码，配合注释查看学习 Gradle常用命令12345678910111213gra">
 <meta property="og:type" content="article">
-<meta property="og:title" content="gujingjing">
+<meta property="og:title" content="Gradle学习">
 <meta property="og:url" content="http://yoursite.com/2018/02/28/Gradle学习/index.html">
 <meta property="og:site_name" content="gujingjing">
-<meta property="og:description" content="Gradle学习掌握Android Gradle 1.Gradle源码查看gradle 源码位置在src中，例如  /Users/jingjinggu/.gradle/wrapper/dists/gradle-4.1-all/bzyivzo6n839fup2jbap0tjew/gradle-4.1 在本地新建一个java工程，导入源码，配合注释查看学习">
+<meta property="og:description" content="掌握Android Gradle 1.Gradle源码查看gradle 源码位置在src中，例如  /Users/jingjinggu/.gradle/wrapper/dists/gradle-4.1-all/bzyivzo6n839fup2jbap0tjew/gradle-4.1 在本地新建一个java工程，导入源码，配合注释查看学习 Gradle常用命令12345678910111213gra">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-02-28T02:38:11.000Z">
+<meta property="og:updated_time" content="2018-08-01T02:47:35.801Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="gujingjing">
-<meta name="twitter:description" content="Gradle学习掌握Android Gradle 1.Gradle源码查看gradle 源码位置在src中，例如  /Users/jingjinggu/.gradle/wrapper/dists/gradle-4.1-all/bzyivzo6n839fup2jbap0tjew/gradle-4.1 在本地新建一个java工程，导入源码，配合注释查看学习">
+<meta name="twitter:title" content="Gradle学习">
+<meta name="twitter:description" content="掌握Android Gradle 1.Gradle源码查看gradle 源码位置在src中，例如  /Users/jingjinggu/.gradle/wrapper/dists/gradle-4.1-all/bzyivzo6n839fup2jbap0tjew/gradle-4.1 在本地新建一个java工程，导入源码，配合注释查看学习 Gradle常用命令12345678910111213gra">
 
 
 
@@ -139,7 +139,7 @@
 
 
 
-  <title> | gujingjing</title>
+  <title>Gradle学习 | gujingjing</title>
   
 
 
@@ -205,7 +205,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -215,7 +215,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -279,7 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">Gradle学习</h1>
         
 
         <div class="post-meta">
@@ -289,7 +289,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-28T10:21:53+08:00">
                 2018-02-28
@@ -329,11 +329,11 @@
       
 
       
-        <hr>
-<h2 id="Gradle学习"><a href="#Gradle学习" class="headerlink" title="Gradle学习"></a>Gradle学习</h2><p><a href="https://kymjs.com/code/2018/02/25/01/?utm_source=androidweekly&amp;utm_medium=website" target="_blank" rel="external">掌握Android Gradle</a></p>
+        <p><a href="https://kymjs.com/code/2018/02/25/01/?utm_source=androidweekly&amp;utm_medium=website" target="_blank" rel="external">掌握Android Gradle</a></p>
 <p>1.Gradle源码查看<br>gradle 源码位置在src中，例如 </p>
 <pre><code>/Users/jingjinggu/.gradle/wrapper/dists/gradle-4.1-all/bzyivzo6n839fup2jbap0tjew/gradle-4.1
 </code></pre><p>在本地新建一个java工程，导入源码，配合注释查看学习</p>
+<h3 id="Gradle常用命令"><a href="#Gradle常用命令" class="headerlink" title="Gradle常用命令"></a>Gradle常用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">gradlew tasks               :查看可用任务列表</div><div class="line">gradlew tasks --offline     :以最快速度执行单元测试</div><div class="line">gradlew tasks --all         :查看所有任务</div><div class="line">gradlew clean               :清理專案</div><div class="line">gradlew build               :建置tasks</div><div class="line"></div><div class="line">// 查看xxx Module的依赖树详情</div><div class="line">gradlew dependencies :xxx:dependencies</div><div class="line">gradlew dependencies :xxx:dependencies &gt;log.txt :依赖树详情保存至当前目录的log文本下</div><div class="line">// 检测module的comiple情况</div><div class="line">gradlew -q dependencies &lt;modelName&gt;:dependencies --configuration compile</div><div class="line">// 解决gradlew: Permission Denied的问题</div><div class="line">chmod +x gradlew</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -358,8 +358,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/27/Js学习知识点/" rel="next" title="">
-                <i class="fa fa-chevron-left"></i> 
+              <a href="/2018/02/27/Js学习知识点/" rel="next" title="Js学习知识点">
+                <i class="fa fa-chevron-left"></i> Js学习知识点
               </a>
             
           </div>
@@ -368,8 +368,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/28/Kotlin学习/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/02/28/Kotlin学习/" rel="prev" title="Kotlin学习">
+                Kotlin学习 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -424,10 +424,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table Des Matières
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Ensemble
           </li>
         </ul>
       
@@ -447,8 +447,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -486,7 +486,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradle学习"><span class="nav-number">1.</span> <span class="nav-text">Gradle学习</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gradle常用命令"><span class="nav-number">1.</span> <span class="nav-text">Gradle常用命令</span></a></li></ol></div>
             
 
           </div>
@@ -518,11 +518,11 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
-  Theme -
+  Thème -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Muse
   </a>
