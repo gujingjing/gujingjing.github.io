@@ -203,7 +203,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -213,7 +213,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -260,6 +260,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/02/AndroidViewmodel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gujingjing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gujingjing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/02/AndroidViewmodel/" itemprop="url">AndroidViewmodel</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-02T16:52:43+08:00">
+                2018-08-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>转自<a href="https://juejin.im/post/5a31f6b951882503eb4b4b21" target="_blank" rel="external">改造 Android 官方架构组件 ViewModel</a><br>转自<a href="">Lifecycle详解&amp;原理分析</a></p>
+<p>#####Lifecycles 生命周期</p>
+<blockquote>
+<p>生命周期组件是 Android 官方架构组件中的核心组件, 它可以使各种实例作为观察者与 Activity 和 Fragment 等具有生命周期特性的组件绑定在一起, LiveData 和 ViewModel 都是基于此组件, 简而言之就是, 你将需要绑定生命周期的实例注册给该组件, 该组件就会在你指定的某个生命周期方法执行时通知这个实例</p>
+</blockquote>
+<p>几个重要的类</p>
+<ul>
+<li><p>LifecycleObserver接口（ Lifecycle观察者）：实现该接口的类，通过注解的方式，可以通过被LifecycleOwner类的addObserver(LifecycleObserver o)方法注册,被注册后，LifecycleObserver便可以观察到LifecycleOwner的生命周期事件。</p>
+</li>
+<li><p>LifecycleOwner接口（Lifecycle持有者）：实现该接口的类持有生命周期(Lifecycle对象)，该接口的生命周期(Lifecycle对象)的改变会被其注册的观察者LifecycleObserver观察到并触发其对应的事件。</p>
+</li>
+<li><p>Lifecycle(生命周期)：和LifecycleOwner不同的是，LifecycleOwner本身持有Lifecycle对象，LifecycleOwner通过其Lifecycle getLifecycle()的接口获取内部Lifecycle对象。</p>
+</li>
+<li><p>State(当前生命周期所处状态)</p>
+</li>
+<li><p>Event(当前生命周期改变对应的事件)：如图所示，当Lifecycle发生改变，如进入onCreate,会自动发出ON_CREATE事件。</p>
+</li>
+<li><p>observer类中，使用OnLifecycleEvent注解新生成的类</p>
+<ul>
+<li>在build-&gt; intermediates-&gt;exploded-aar-&gt;对应的module下</li>
+<li>事件发生变化后会调用sync()方法，同步通知observer中的状态</li>
+</ul>
+</li>
+</ul>
+<h5 id="LiveData"><a href="#LiveData" class="headerlink" title="LiveData"></a>LiveData</h5><blockquote>
+<p>LiveData是一个可观察的数据持有者类。与常见的观察者不同，LiveData是有生命周期感知的。这意味着它尊重其他应用程序组件的生命周期，比如Activity、Fragment或Service。这种感知确保LiveData只更新处于生命周期状态内的应用程序组件。</p>
+</blockquote>
+<h5 id="ViewModel"><a href="#ViewModel" class="headerlink" title="ViewModel"></a>ViewModel</h5><blockquote>
+<p>ViewModel 有两个功能, 第一个功能可以使 ViewModel 以及 ViewModel 中的数据在屏幕旋转或配置更改引起的 Activity 重建时存活下来, 重建后数据可继续使用, 第二个功能可以帮助开发者轻易实现 Fragment 与 Fragment 之间, Activity 与 Fragment 之间的通讯以及共享数据</p>
+</blockquote>
+<h5 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h5><ol>
+<li>通过创建MyViewmodel extends AndroidViewModule</li>
+<li>内部新建MutableLiveData<t> 创建可监听数据</t></li>
+<li>通过context获取到viewmodule 添加监听 viewmodule.liveData.observer()</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/01/GIT常用命令备忘/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -289,7 +443,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-01T11:09:54+08:00">
                 2018-08-01
@@ -419,7 +573,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-01T10:48:46+08:00">
                 2018-08-01
@@ -588,7 +742,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-01T10:22:18+08:00">
                 2018-03-01
@@ -758,7 +912,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-28T10:31:24+08:00">
                 2018-02-28
@@ -878,7 +1032,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-28T10:21:53+08:00">
                 2018-02-28
@@ -1002,7 +1156,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-27T15:02:30+08:00">
                 2018-02-27
@@ -1126,7 +1280,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-27T14:31:16+08:00">
                 2018-02-27
@@ -1258,7 +1412,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-26T15:13:00+08:00">
                 2017-09-26
@@ -1384,7 +1538,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-22T15:39:53+08:00">
                 2017-09-22
@@ -1427,164 +1581,6 @@
         
           
             
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/11/View绘制流程/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="gujingjing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="gujingjing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/11/View绘制流程/" itemprop="url">View绘制流程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-11T14:29:22+08:00">
-                2017-09-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>先说说我们平时看见的手机屏幕都包含哪些试图吧<br><img src="http://img.blog.csdn.net/20150528211309106" alt="手机屏幕view图片"></p>
-<p>Activity界面中的有一个成员window,它的实例化对象是PhoneWindow。<br>这里简单说明下这些类：</p>
-<pre><code>- window是一个抽象接口
-- PhoneWindow是window的实例对象
-    - 内部包含了一个DecorView,decorView是所有应用窗口(Activity界面)的根布局
-    - decorView是PhoneWindow的内部类,本质上是一个FrameLayout
-    - decorView中只包含了一个LinearLayout(垂直的)
-    - 垂直的linearLayout只包含了两个view,一个是titleBar,一个是id为content的FramLayout
-    - 我们setContentView布局实际上就算添加到了content 的FramLayout中了
-</code></pre><p>整体如下图<br><img src="http://img.blog.csdn.net/20150526104647053" alt=""></p>
-<p>###视图的绘制流程<br>每一个视图的绘制过程都必须经过三个步骤:onMeasure()、onLayout()、onDraw()</p>
-<p>#####onMeasure()<br>试图的measure测量实际是，从顶层父类view向子view递归调用mesure(里面又调用onMeasure()方法)<br>的过程</p>
-<blockquote>
-<p>MeasureSpec（View的内部类）测量规格为int型，值由高2位规格模式specMode和低30位具体尺寸specSize组成。其中specMode只有三种值：</p>
-<p>MeasureSpec.EXACTLY //确定模式，父View希望子View的大小是确定的，由specSize决定；<br>MeasureSpec.AT_MOST //最多模式，父View希望子View的大小最多是specSize指定的值；<br>MeasureSpec.UNSPECIFIED //未指定模式，父View完全依据子View的设计值来决定；</p>
-<p>view 的measure 是final，不能重载，所以view 只能调用onMeasure()<br>view 的getMeasuredWidth()和getMeasuredHeight()来获取view的宽高,但是只能在onMeasure()之后，才能正常的获取到</p>
-</blockquote>
-<p>#####layout()<br>和mesure类似,layout也是从顶层父类向子类递归调用了layout()方法,通过上一步onMeasure()获取子类的大小，将子类放在合适的位置</p>
-<blockquote>
-<p>View.layout方法可被重载，ViewGroup.layout为final的不可重载，ViewGroup.onLayout为abstract的，子类必须重载实现自己的位置逻辑。</p>
-<p>measure操作完成后得到的是对每个View经测量过的measuredWidth和measuredHeight，layout操作完成之后得到的是对每个View进行位置分配后的mLeft、mTop、mRight、mBottom，这些值都是相对于父View来说的。</p>
-<p>凡是layout_XXX的布局属性基本都针对的是包含子View的ViewGroup的，当对一个没有父容器的View设置相关layout_XXX属性是没有任何意义的。</p>
-<p>使用View的getWidth()和getHeight()方法来获取View测量的宽高，必须保证这两个方法在onLayout流程之后被调用才能返回有效值。</p>
-</blockquote>
-<p>#####onDraw()<br>绘制过程就是把view对象绘制到屏幕上,整个draw过程，需要注意如下细节:</p>
-<blockquote>
-<p>如果该View是一个ViewGroup，则需要递归绘制其所包含的所有子View。</p>
-<p>View默认不会绘制任何内容，真正的绘制都需要自己在子类中实现。</p>
-<p>View的绘制是借助onDraw方法传入的Canvas类来进行的。</p>
-<p>区分View动画和ViewGroup布局动画，前者指的是View自身的动画，可以通过setAnimation添加，后者是专门针对ViewGroup显示内部子视图时设置的动画，可以在xml布局文件中对ViewGroup设置layoutAnimation属性（譬如对LinearLayout设置子View在显示时出现逐行、随机、下等显示等不同动画效果）。</p>
-<p>在获取画布剪切区（每个View的draw中传入的Canvas）时会自动处理掉padding，子View获取Canvas不用关注这些逻辑，只用关心如何绘制即可。</p>
-<p>默认情况下子View的ViewGroup.drawChild绘制顺序和子View被添加的顺序一致，但是你也可以重载ViewGroup.getChildDrawingOrder()方法提供不同顺序。</p>
-</blockquote>
-<p>参考文档:</p>
-<p><a href="http://www.jianshu.com/p/5dad5d27588d" target="_blank" rel="external">Android Tools 之一 Hierarchy Viewer</a></p>
-<p><a href="http://blog.csdn.net/yanbober/article/details/46128379" target="_blank" rel="external">Android应用层View绘制流程与源码分析</a></p>
-<p><a href="http://blog.csdn.net/yanbober/article/details/45970721" target="_blank" rel="external">Android应用setContentView与LayoutInflater加载解析机制源码分析</a></p>
-<p><a href="http://www.jianshu.com/p/060b5f68da79" target="_blank" rel="external">深入理解Android之View的绘制流程</a></p>
-<p><a href="http://blog.csdn.net/guolin_blog/article/details/16330267" target="_blank" rel="external">Android视图绘制流程完全解析，带你一步步深入了解View二</a></p>
-
           
         
       
@@ -1669,8 +1665,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -1724,7 +1720,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

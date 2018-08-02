@@ -94,17 +94,17 @@
 
 
 
-<meta name="description" content="引用自Hexo常用指令  npm install hexo -g #安装npm update hexo -g #升级hexo init #初始化   初始化 init  hexo init   创建一个新的文件  hexo new xxx   生成静态文件generate  hexo generate 简写hexo g一般生成静态文件和发布配合使用 |选项|描述||—|—||-d, –deploy">
+<meta name="description" content="转自改造 Android 官方架构组件 ViewModel转自Lifecycle详解&amp;amp;原理分析 #####Lifecycles 生命周期  生命周期组件是 Android 官方架构组件中的核心组件, 它可以使各种实例作为观察者与 Activity 和 Fragment 等具有生命周期特性的组件绑定在一起, LiveData 和 ViewModel 都是基于此组件, 简而言之就是, 你将需要">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo常用命令">
-<meta property="og:url" content="http://yoursite.com/2018/08/01/Hexo常用命令/index.html">
+<meta property="og:title" content="AndroidViewmodel">
+<meta property="og:url" content="http://yoursite.com/2018/08/02/AndroidViewmodel/index.html">
 <meta property="og:site_name" content="gujingjing">
-<meta property="og:description" content="引用自Hexo常用指令  npm install hexo -g #安装npm update hexo -g #升级hexo init #初始化   初始化 init  hexo init   创建一个新的文件  hexo new xxx   生成静态文件generate  hexo generate 简写hexo g一般生成静态文件和发布配合使用 |选项|描述||—|—||-d, –deploy">
+<meta property="og:description" content="转自改造 Android 官方架构组件 ViewModel转自Lifecycle详解&amp;amp;原理分析 #####Lifecycles 生命周期  生命周期组件是 Android 官方架构组件中的核心组件, 它可以使各种实例作为观察者与 Activity 和 Fragment 等具有生命周期特性的组件绑定在一起, LiveData 和 ViewModel 都是基于此组件, 简而言之就是, 你将需要">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-01T03:16:21.293Z">
+<meta property="og:updated_time" content="2018-08-02T10:17:22.068Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo常用命令">
-<meta name="twitter:description" content="引用自Hexo常用指令  npm install hexo -g #安装npm update hexo -g #升级hexo init #初始化   初始化 init  hexo init   创建一个新的文件  hexo new xxx   生成静态文件generate  hexo generate 简写hexo g一般生成静态文件和发布配合使用 |选项|描述||—|—||-d, –deploy">
+<meta name="twitter:title" content="AndroidViewmodel">
+<meta name="twitter:description" content="转自改造 Android 官方架构组件 ViewModel转自Lifecycle详解&amp;amp;原理分析 #####Lifecycles 生命周期  生命周期组件是 Android 官方架构组件中的核心组件, 它可以使各种实例作为观察者与 Activity 和 Fragment 等具有生命周期特性的组件绑定在一起, LiveData 和 ViewModel 都是基于此组件, 简而言之就是, 你将需要">
 
 
 
@@ -133,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/08/01/Hexo常用命令/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/02/AndroidViewmodel/"/>
 
 
 
 
 
-  <title>Hexo常用命令 | gujingjing</title>
+  <title>AndroidViewmodel | gujingjing</title>
   
 
 
@@ -262,7 +262,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/01/Hexo常用命令/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/02/AndroidViewmodel/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gujingjing">
@@ -279,7 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hexo常用命令</h1>
+          <h1 class="post-title" itemprop="name headline">AndroidViewmodel</h1>
         
 
         <div class="post-meta">
@@ -291,8 +291,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-01T10:48:46+08:00">
-                2018-08-01
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-02T16:52:43+08:00">
+                2018-08-02
               </time>
             
 
@@ -329,56 +329,41 @@
       
 
       
-        <p>引用自<a href="https://hexo.io/zh-cn/docs/commands.html" target="_blank" rel="external">Hexo常用指令</a></p>
+        <p>转自<a href="https://juejin.im/post/5a31f6b951882503eb4b4b21" target="_blank" rel="external">改造 Android 官方架构组件 ViewModel</a><br>转自<a href="">Lifecycle详解&amp;原理分析</a></p>
+<p>#####Lifecycles 生命周期</p>
 <blockquote>
-<p>npm install hexo -g #安装<br>npm update hexo -g #升级<br>hexo init #初始化</p>
+<p>生命周期组件是 Android 官方架构组件中的核心组件, 它可以使各种实例作为观察者与 Activity 和 Fragment 等具有生命周期特性的组件绑定在一起, LiveData 和 ViewModel 都是基于此组件, 简而言之就是, 你将需要绑定生命周期的实例注册给该组件, 该组件就会在你指定的某个生命周期方法执行时通知这个实例</p>
 </blockquote>
-<ol>
-<li><p>初始化 init</p>
+<p>几个重要的类</p>
 <ul>
-<li>hexo init</li>
-</ul>
+<li><p>LifecycleObserver接口（ Lifecycle观察者）：实现该接口的类，通过注解的方式，可以通过被LifecycleOwner类的addObserver(LifecycleObserver o)方法注册,被注册后，LifecycleObserver便可以观察到LifecycleOwner的生命周期事件。</p>
 </li>
-<li><p>创建一个新的文件</p>
+<li><p>LifecycleOwner接口（Lifecycle持有者）：实现该接口的类持有生命周期(Lifecycle对象)，该接口的生命周期(Lifecycle对象)的改变会被其注册的观察者LifecycleObserver观察到并触发其对应的事件。</p>
+</li>
+<li><p>Lifecycle(生命周期)：和LifecycleOwner不同的是，LifecycleOwner本身持有Lifecycle对象，LifecycleOwner通过其Lifecycle getLifecycle()的接口获取内部Lifecycle对象。</p>
+</li>
+<li><p>State(当前生命周期所处状态)</p>
+</li>
+<li><p>Event(当前生命周期改变对应的事件)：如图所示，当Lifecycle发生改变，如进入onCreate,会自动发出ON_CREATE事件。</p>
+</li>
+<li><p>observer类中，使用OnLifecycleEvent注解新生成的类</p>
 <ul>
-<li>hexo new xxx</li>
+<li>在build-&gt; intermediates-&gt;exploded-aar-&gt;对应的module下</li>
+<li>事件发生变化后会调用sync()方法，同步通知observer中的状态</li>
 </ul>
 </li>
-<li><p>生成静态文件generate</p>
-<ul>
-<li>hexo generate</li>
-<li><p>简写hexo g<br>一般生成静态文件和发布配合使用</p>
-<p>|选项|描述|<br>|—|—|<br>|-d, –deploy|文件生成后立即部署网站|<br>|-w, –watch    |监视文件变动|</p>
-</li>
 </ul>
-</li>
-<li><p>启动服务器server</p>
-<ul>
-<li>hexo server</li>
-<li><p>启动服务器。默认情况下，访问网址为： <a href="http://localhost:4000/。" target="_blank" rel="external">http://localhost:4000/。</a></p>
-<p>|选项|    描述|<br>|—|—|<br>|-p, –port|    重设端口|<br>|-s, –static    |只使用静态文件|<br>|-l, –log|    启动日记记录，使用覆盖记录格式|</p>
-</li>
-</ul>
-</li>
-<li><p>发布、部署 deploy</p>
-<ul>
-<li>hexo deploy</li>
-<li><p>简写 hexo d</p>
-<p>|参数|    描述|<br>|—|—|<br>|-g, –generate    |部署之前预先生成静态文件|</p>
-</li>
-</ul>
-</li>
-</ol>
-<ol>
-<li>清除缓存 clean<ul>
-<li>hexo clean</li>
-</ul>
-</li>
-</ol>
-<blockquote>
-<p>清除缓存文件 (db.json) 和已生成的静态文件 (public)。</p>
-<p>在某些情况（尤其是更换主题后），如果发现您对站点的更改无论如何也不生效，您可能需要运行该命令。</p>
+<h5 id="LiveData"><a href="#LiveData" class="headerlink" title="LiveData"></a>LiveData</h5><blockquote>
+<p>LiveData是一个可观察的数据持有者类。与常见的观察者不同，LiveData是有生命周期感知的。这意味着它尊重其他应用程序组件的生命周期，比如Activity、Fragment或Service。这种感知确保LiveData只更新处于生命周期状态内的应用程序组件。</p>
 </blockquote>
+<h5 id="ViewModel"><a href="#ViewModel" class="headerlink" title="ViewModel"></a>ViewModel</h5><blockquote>
+<p>ViewModel 有两个功能, 第一个功能可以使 ViewModel 以及 ViewModel 中的数据在屏幕旋转或配置更改引起的 Activity 重建时存活下来, 重建后数据可继续使用, 第二个功能可以帮助开发者轻易实现 Fragment 与 Fragment 之间, Activity 与 Fragment 之间的通讯以及共享数据</p>
+</blockquote>
+<h5 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h5><ol>
+<li>通过创建MyViewmodel extends AndroidViewModule</li>
+<li>内部新建MutableLiveData<t> 创建可监听数据</t></li>
+<li>通过context获取到viewmodule 添加监听 viewmodule.liveData.observer()</li>
+</ol>
 
       
     </div>
@@ -403,8 +388,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/01/flex布局/" rel="next" title="flex布局">
-                <i class="fa fa-chevron-left"></i> flex布局
+              <a href="/2018/08/01/GIT常用命令备忘/" rel="next" title="GIT常用命令备忘">
+                <i class="fa fa-chevron-left"></i> GIT常用命令备忘
               </a>
             
           </div>
@@ -412,10 +397,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/01/GIT常用命令备忘/" rel="prev" title="GIT常用命令备忘">
-                GIT常用命令备忘 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -467,8 +448,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -512,6 +502,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#LiveData"><span class="nav-number">1.</span> <span class="nav-text">LiveData</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ViewModel"><span class="nav-number">2.</span> <span class="nav-text">ViewModel</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用"><span class="nav-number">3.</span> <span class="nav-text">使用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
