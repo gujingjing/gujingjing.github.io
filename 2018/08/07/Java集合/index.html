@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Java集合分类  Set 无序的 不可重复的   List 有序的 可重复的   Map 具有映射关系的集合   Queue 队列集合     Java集合和数组的区别  长度不同 数组在创建的时候指定长度，数组只能保存定长数组 集合可以保存不确定的数量长度   存放类型不同 数组存放对象可以是基本数据类型也可以是对象 集合中只能存放对象     Java集合之间的继承关系  Java集合接口">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java集合">
+<meta property="og:url" content="http://yoursite.com/2018/08/07/Java集合/index.html">
+<meta property="og:site_name" content="gujingjing">
+<meta property="og:description" content="Java集合分类  Set 无序的 不可重复的   List 有序的 可重复的   Map 具有映射关系的集合   Queue 队列集合     Java集合和数组的区别  长度不同 数组在创建的时候指定长度，数组只能保存定长数组 集合可以保存不确定的数量长度   存放类型不同 数组存放对象可以是基本数据类型也可以是对象 集合中只能存放对象     Java集合之间的继承关系  Java集合接口">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3985563-e7febf364d8d8235.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-07T10:26:11.052Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java集合">
+<meta name="twitter:description" content="Java集合分类  Set 无序的 不可重复的   List 有序的 可重复的   Map 具有映射关系的集合   Queue 队列集合     Java集合和数组的区别  长度不同 数组在创建的时候指定长度，数组只能保存定长数组 集合可以保存不确定的数量长度   存放类型不同 数组存放对象可以是基本数据类型也可以是对象 集合中只能存放对象     Java集合之间的继承关系  Java集合接口">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3985563-e7febf364d8d8235.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/07/Java集合/"/>
+
+
+
+
+
+  <title>Java集合 | gujingjing</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gujingjing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/07/Java集合/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gujingjing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gujingjing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java集合</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-07T14:34:30+08:00">
+                2018-08-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ol>
+<li><p>Java集合分类</p>
+<ul>
+<li>Set<ul>
+<li>无序的</li>
+<li>不可重复的</li>
+</ul>
+</li>
+<li>List<ul>
+<li>有序的</li>
+<li>可重复的</li>
+</ul>
+</li>
+<li>Map<ul>
+<li>具有映射关系的集合</li>
+</ul>
+</li>
+<li>Queue<ul>
+<li>队列集合</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Java集合和数组的区别</p>
+<ul>
+<li>长度不同<ul>
+<li>数组在创建的时候指定长度，数组只能保存定长数组</li>
+<li>集合可以保存不确定的数量长度</li>
+</ul>
+</li>
+<li>存放类型不同<ul>
+<li>数组存放对象可以是基本数据类型也可以是对象</li>
+<li>集合中只能存放对象</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Java集合之间的继承关系</p>
+<ul>
+<li>Java集合接口主要是由Collection和Map。Collection和Map是java集合的根接口</li>
+</ul>
+</li>
+</ol>
+<p><img src="http://upload-images.jianshu.io/upload_images/3985563-e7febf364d8d8235.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Java继承图"></p>
+<p>图中的ArrayList、HashSet、LinkHashSet、TreeSet是我们常用的集合</p>
+<ol>
+<li><p>ArrayList 集合</p>
+<blockquote>
+<p>ArrayList 是数组实现,节约空间，但数组有容量限制，超出按照50%扩容,用System.arrayCopy()复制到新的数组。默认第一次创建的大小为10 的数组。</p>
+</blockquote>
+<ul>
+<li>数组的查找get(i)、设置set(i)根据下标查找，性能很高</li>
+<li>在数组默认添加元素add()性能也高</li>
+<li>数组的增加 add(i)、删除remove(i) 需要用到System.arrayCopy()性能就比较差</li>
+</ul>
+</li>
+<li><p>LinkedList 集合</p>
+<blockquote>
+<p>LinkedList 是双向链表实现。链表无容量限制,双向链表本身使用了更多的空间，而且需要额外的使用指针的操作。</p>
+<ul>
+<li>按照下标查找get(i)、set(i)<ul>
+<li>需要遍历查询</li>
+<li>根据i 在数组的前半部分还是后半部分，分别从前往后、从后往前查找</li>
+</ul>
+</li>
+<li>插入和删除元素 add()、remove()<ul>
+<li>只需要修改前后节点的指针，但是需要遍历移动到具体的指针位置</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p>HashMap 集合</p>
+<ul>
+<li>基于Map接口</li>
+<li>可以null值/null键</li>
+<li>非同步</li>
+<li>无序</li>
+</ul>
+</li>
+</ol>
+<p><strong>HashMap中两个比较重要的变量</strong><br>HashMap内部是一个HashMapEntry&lt;?,?&gt;[]数组  </p>
+<pre><code>- 数组中对象可能是链表或者树
+</code></pre><ul>
+<li>Capacity 容量<ul>
+<li>简单的说就是bucket的容器大小</li>
+</ul>
+</li>
+<li>Load factor 负载因子<ul>
+<li>简单的说就是bucket 装满程度的最大比例</li>
+</ul>
+</li>
+<li>扩容机制<ul>
+<li>当bucket中装的元素大于 capacity* loadFactor 的时候，调整bucket的大小为当前的2倍</li>
+</ul>
+</li>
+<li>put()函数的实现<ul>
+<li>先对key进行hashCode()处理得到key的hash值</li>
+<li>再根据key的值计算出元素index的下标位置</li>
+<li>如果没有碰撞直接放到bucket中</li>
+<li>如果碰撞，以列表的形式存储在buckets中</li>
+<li>如果碰撞列表过长，就会转化成红黑树</li>
+<li>如果节点已经存在，替换oldValue(保证key的唯一)</li>
+<li>如果bucket满了，需要resize()重新计算扩容</li>
+</ul>
+</li>
+<li>get() 函数实现<ul>
+<li>先对key进行hashCode() 获取hash值</li>
+<li>通过hash值获取到对应的index</li>
+<li>如果有冲突，通过key.equals()查找对应的entry<ul>
+<li>若为树，则在树中通过key.equals(k)查找，O(logn)；</li>
+<li>若为链表，则在链表中通过key.equals(k)查找，O(n)。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>hash()函数实现</li>
+<li>RESIZE函数实现<blockquote>
+<p>当put时，如果发现目前的bucket占用程度已经超过了Load Factor所希望的比例，那么就会发生resize。在resize的过程，简单的说就是把bucket扩充为2倍，之后重新计算index，把节点再放到新的bucket中。大致意思就是说，当超过限制的时候会resize，然而又因为我们使用的是2次幂的扩展(指长度扩为原来2倍)，所以，元素的位置要么是在原位置，要么是在原位置再移动2次幂的位置。</p>
+</blockquote>
+</li>
+</ul>
+<p>#####总结<br>我们现在可以回答开始的几个问题，加深对HashMap的理解：</p>
+<ol>
+<li>什么时候会使用HashMap？他有什么特点？<br>是基于Map接口的实现，存储键值对时，它可以接收null的键值，是非同步的，HashMap存储着Entry(hash, key, value, next)对象。</li>
+<li>你知道HashMap的工作原理吗？<br>通过hash的方法，通过put和get存储和获取对象。存储对象时，我们将K/V传给put方法时，它调用hashCode计算hash从而得到bucket位置，进一步存储，HashMap会根据当前bucket的占用情况自动调整容量(超过Load Facotr则resize为原来的2倍)。获取对象时，我们将K传给get，它调用hashCode计算hash从而得到bucket位置，并进一步调用equals()方法确定键值对。如果发生碰撞的时候，Hashmap通过链表将产生碰撞冲突的元素组织起来，在Java 8中，如果一个bucket中碰撞冲突的元素超过某个限制(默认是8)，则使用红黑树来替换链表，从而提高速度。</li>
+<li>你知道get和put的原理吗？equals()和hashCode()的都有什么作用？<br>通过对key的hashCode()进行hashing，并计算下标( (n-1) &amp; hash)，从而获得buckets的位置。如果产生碰撞，则利用key.equals()方法去链表或树中去查找对应的节点</li>
+<li>你知道hash的实现吗？为什么要这样实现？<br>在Java 1.8的实现中，是通过hashCode()的高16位异或低16位实现的：(h = k.hashCode()) ^ (h &gt;&gt;&gt; 16)，主要是从速度、功效、质量来考虑的，这么做可以在bucket的n比较小的时候，也能保证考虑到高低bit都参与到hash的计算中，同时不会有太大的开销。</li>
+<li>如果HashMap的大小超过了负载因子(load factor)定义的容量，怎么办？<br>如果超过了负载因子(默认0.75)，则会重新resize一个原来长度两倍的HashMap，并且重新调用hash方法。</li>
+</ol>
+<p><strong>SparseArray替换HashMap</strong></p>
+<ul>
+<li>SparseArray是单纯数组的结合.被称为稀疏数组,对数据保存的时候,不会有额外的开销<blockquote>
+<p>SparseArray比HashMap更省内存，在某些条件下性能更好，主要是因为它避免了对key的自动装箱（int转为Integer类型），它内部则是通过两个数组来进行数据存储的，一个存储key，另外一个存储value，为了优化性能，它内部对数据还采取了压缩的方式来表示稀疏数组的数据，从而节约内存空间，我们从源码中可以看到key和value分别是用数组表示</p>
+</blockquote>
+</li>
+</ul>
+<p><a href="https://blog.csdn.net/qq_16318981/article/details/54632223" target="_blank" rel="external">SparseArray和HashMap对比</a></p>
+<p><strong>LinkedHashMap</strong><br>内部是双向链表实现</p>
+<ul>
+<li>LinkedHashMap继承HashMap,内部重写了三个方法<ul>
+<li>afterNodeAccess 在</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/06/插件化学习/" rel="next" title="Atlas 插件化学习">
+                <i class="fa fa-chevron-left"></i> Atlas 插件化学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="gujingjing" />
+          <p class="site-author-name" itemprop="name">gujingjing</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gujingjing</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="gujingjing">
 <meta property="og:description" content="掌握Android Gradle 1.Gradle源码查看gradle 源码位置在src中，例如  /Users/jingjinggu/.gradle/wrapper/dists/gradle-4.1-all/bzyivzo6n839fup2jbap0tjew/gradle-4.1 在本地新建一个java工程，导入源码，配合注释查看学习 ###Android 目录下依赖下载的地址 参考地址 Gra">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-03T06:25:07.975Z">
+<meta property="og:updated_time" content="2018-08-06T05:01:35.269Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Gradle学习">
 <meta name="twitter:description" content="掌握Android Gradle 1.Gradle源码查看gradle 源码位置在src中，例如  /Users/jingjinggu/.gradle/wrapper/dists/gradle-4.1-all/bzyivzo6n839fup2jbap0tjew/gradle-4.1 在本地新建一个java工程，导入源码，配合注释查看学习 ###Android 目录下依赖下载的地址 参考地址 Gra">
@@ -336,6 +336,20 @@
 <p>###Android 目录下依赖下载的地址</p>
 <p><a href="https://blog.csdn.net/T_yoo_csdn/article/details/80016601" target="_blank" rel="external">参考地址</a></p>
 <h3 id="Gradle常用命令"><a href="#Gradle常用命令" class="headerlink" title="Gradle常用命令"></a>Gradle常用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">gradlew tasks               :查看可用任务列表</div><div class="line">gradlew tasks --offline     :以最快速度执行单元测试</div><div class="line">gradlew tasks --all         :查看所有任务</div><div class="line">gradlew clean               :清理專案</div><div class="line">gradlew build               :建置tasks</div><div class="line"></div><div class="line">// 查看xxx Module的依赖树详情</div><div class="line">gradlew dependencies :xxx:dependencies</div><div class="line">gradlew dependencies :xxx:dependencies &gt;log.txt :依赖树详情保存至当前目录的log文本下</div><div class="line">// 检测module的comiple情况</div><div class="line">gradlew -q dependencies &lt;modelName&gt;:dependencies --configuration compile</div><div class="line">// 解决gradlew: Permission Denied的问题</div><div class="line">chmod +x gradlew</div></pre></td></tr></table></figure>
+<ul>
+<li>编译对应模块</li>
+</ul>
+<p>./gradlew moduleName : build</p>
+<pre><code>右侧gradle 下有build
+查看各个模块的依赖
+</code></pre><ul>
+<li>./gradlew moduleName :dependencies &gt;log 打印依赖日志</li>
+<li>gradle 查看更多错误<ul>
+<li>gradle build –info</li>
+<li>gradle build –debug</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -449,7 +463,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
