@@ -203,7 +203,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -213,7 +213,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -260,6 +260,296 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/08/与Webview交互/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gujingjing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gujingjing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/08/与Webview交互/" itemprop="url">Js与Webview交互</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-08T10:43:58+08:00">
+                2018-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>补充</strong></p>
+<pre><code>- WebViewClient
+    - WebViewClient主要帮助WebView处理各种通知、请求事件的，比如：
+        - shouldOverrideUrlLoading
+        - onLoadResource
+        - onPageStart
+        - onPageFinish
+        - onReceiveError
+        - onReceivedHttpAuthRequest
+- WebChromeClient
+    -WebChromeClient主要辅助WebView处理Javascript的对话框、网站图标、网站title、加载进度等比如
+    - onCloseWindow(关闭WebView)
+    - onCreateWindow()
+    - onJsAlert (WebView上alert无效，需要定制WebChromeClient处理弹出)
+    - onJsPrompt
+    - onJsConfirm
+    - onProgressChanged
+    - onReceivedIcon
+    - onReceivedTitle
+</code></pre><ol>
+<li><p>Android与JS交互的几种方式</p>
+<ul>
+<li>webView.addJavascriptInterface(object,name)<ul>
+<li>通过向js中注入一个对象</li>
+<li>js通过window.name获取到对象，即可调用对象中的方法</li>
+<li><strong>漏洞</strong><ul>
+<li>在Javascript代码中，利用Java反射机制，通过interfaceObject获取当前Runtime对象引用，并调用其exec方法执行nc命令连接服务器8088及8089端口。</li>
+<li><a href="https://www.jianshu.com/p/6309d243e4c0" target="_blank" rel="external">漏洞说明引用</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>WebViewClient.shouldOverrideUrlLoading()<ul>
+<li>通过自定义 webViewClient中的shouldOverrideUrlLoading方法</li>
+<li>监听当前正在加载的url地址</li>
+<li>通过解析url来做出相应操作</li>
+</ul>
+</li>
+<li>WebChromeClient.onJsAlert()/onJsConfirm()/onJsPrompt() 方法分别回调拦截JS对话框alert()、confirm()、prompt()消息<ul>
+<li>alert() 弹出个提示框 （确定） </li>
+<li>confirm() 弹出个确认框 （确定，取消） </li>
+<li>prompt() 弹出个输入框 让你输入东西</li>
+<li>通过自定义webViewChromClient</li>
+<li>主要是监听message 解析，做对应操作</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Android调用Js方法</p>
+<ul>
+<li>webView.loadUrl()<ul>
+<li>mWebView.loadUrl(“javascript:callJS()”);</li>
+</ul>
+</li>
+<li>mWebView.evaluateJavascript 使用如下</li>
+<li>此方法只支持android 4.4以上</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">    mWebView.evaluateJavascript（&quot;javascript:callJS()&quot;, new ValueCallback&lt;String&gt;() &#123;</div><div class="line">        @Override</div><div class="line">        public void onReceiveValue(String value) &#123;</div><div class="line">            //此处为 js 返回的结果</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="JsBridge源码解析"><a href="#JsBridge源码解析" class="headerlink" title="JsBridge源码解析"></a>JsBridge源码解析</h3><p><a href="https://github.com/lzyzsd/JsBridge" target="_blank" rel="external">JsBridgeGithub传送门</a></p>
+<p><a href="https://www.jianshu.com/p/e4f7fb571cc0" target="_blank" rel="external">转自Android与JsBridge使用原理</a></p>
+<p>JsBridge重要的三点:</p>
+<ol>
+<li>Android调用JS是通过loadUrl(url),url中可以拼接要传给JS的对象</li>
+<li>JS调用Android是通过shouldOverrideUrlLoading</li>
+<li>JsBridge将沟通数据封装成Message，然后放进Queue,再将Queue进行传输</li>
+</ol>
+<p><strong>BridgeWebview</strong></p>
+<ul>
+<li>queueMessage()消息队列方法<ul>
+<li>先判断startMsg数组<ul>
+<li>这边startMsg是在js界面还未加载完，之前调用的消息</li>
+<li>在onpageFinish()会将所有消息分发，并将startMsg致空</li>
+</ul>
+</li>
+<li>init()方法<ul>
+<li>设置了默认的setWebViewClient()<ul>
+<li>监听了加载的url,重新了shouldOverrideUrlLoading()方法</li>
+<li>在页面onPageFinish()加载结束的时候<ul>
+<li>向js中注入一端js代码(WebViewJavascriptBridge.js)</li>
+<li>判断当前webview中是否有未分发出去的msg,分发出去，并致空</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>bridgeWebview中有两个map<ul>
+<li>Map<string, callbackfunction=""> responseCallbacks<ul>
+<li>存放callbackId 和CallBackFunction 回调处理方法</li>
+<li>js结果返回处理</li>
+</ul>
+</string,></li>
+<li>Map<string, bridgehandler=""> messageHandlers<ul>
+<li>存放handleName和handle处理方法</li>
+<li>提供给js调用的</li>
+</ul>
+</string,></li>
+</ul>
+</li>
+</ul>
+<p><strong>WebViewJavascriptBridge.js</strong></p>
+<ul>
+<li>主要的作用是向window中添加WebViewJavascriptBridge对象</li>
+<li>提供给html界面的调用</li>
+<li>创建了一个WebViewJavascriptBridgeReady完成事件<ul>
+<li>document.createEvent(‘Events’);</li>
+<li>在WebViewJavascriptBridge.js加载完成的时候分发事件</li>
+</ul>
+</li>
+</ul>
+<p>#####Java调用JS流程</p>
+<ul>
+<li>Java层,bridgeWebview先设置好默认参数<ul>
+<li>设置setDefaultHandler() 设置默认没有handleName的返回处理</li>
+<li>加载url</li>
+<li>webview.registerHandler() 注入方法提供给js调用</li>
+</ul>
+</li>
+<li>Js层<ul>
+<li>在demo.html中 添加了connectWebViewJavascriptBridge方法<ul>
+<li>第一次加载的时候，获取不到WebViewJavascriptBridge<ul>
+<li>添加事件(WebViewJavascriptBridgeReady)bridge完成事件</li>
+<li>在WebViewJavascriptBridge.js完成，发出完成事件的时候，重新处理callback</li>
+</ul>
+</li>
+<li>在收到事件重新处理callBack的时候WebViewJavascriptBridge不为空</li>
+<li>callBack中主要做俩大事情<ul>
+<li>bridge.init()<ul>
+<li>添加js端默认的messageHandler消息处理</li>
+<li>这个处理和java webview中的ponpageFinish()一样</li>
+</ul>
+</li>
+<li>bridge.registerHandler()<ul>
+<li>向bridge中注入方法提供给java调用</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>至此，两端的通信才算建立完成</li>
+</ul>
+<p>#####Java调用JS流程</p>
+<ul>
+<li>webview.callHandler()<ul>
+<li>内部会调用doSend()<ul>
+<li>根据handleName、data、callback组装出msg</li>
+<li>创建一个callbackId ,将id和callBackFunction存放在map中</li>
+<li>msg中也存入一份callbackId</li>
+<li>发送消息<ul>
+<li>在主线程中调用 webview.loadUrl()调用js代码</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>js中的WebViewJavascriptBridge.js<ul>
+<li>_handleMessageFromNative()方法会接受到调用的msg</li>
+<li>在js中根据handleName去除对应的handle做处理</li>
+<li>处理结束将responseId:callbackId 和结果一起返回</li>
+<li>根据双方有responseId 和 callbackId 判断是发送还是请求</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/07/Java集合/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -289,7 +579,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-07T14:34:30+08:00">
                 2018-08-07
@@ -555,7 +845,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-06T11:10:06+08:00">
                 2018-08-06
@@ -683,7 +973,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-02T16:52:43+08:00">
                 2018-08-02
@@ -837,7 +1127,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-01T11:09:54+08:00">
                 2018-08-01
@@ -967,7 +1257,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-01T10:48:46+08:00">
                 2018-08-01
@@ -1136,7 +1426,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-01T10:22:18+08:00">
                 2018-03-01
@@ -1306,7 +1596,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-28T10:31:24+08:00">
                 2018-02-28
@@ -1427,7 +1717,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-28T10:21:53+08:00">
                 2018-02-28
@@ -1567,7 +1857,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-27T15:02:30+08:00">
                 2018-02-27
@@ -1612,138 +1902,6 @@
             <ol>
 <li><p>Es6扩展运算符(…)</p>
 <p> <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_operator" target="_blank" rel="external">参考网址</a></p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/27/Mobox-学习/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="gujingjing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="gujingjing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/27/Mobox-学习/" itemprop="url">Mobox 学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-27T14:31:16+08:00">
-                2018-02-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://cn.mobx.js.org/" target="_blank" rel="external"><strong>[Mobox]中文文档</strong></a></p>
-<ol>
-<li><p>Mobox中常用的标签</p>
-<ul>
-<li>@observable : 使用此标签监控要检测的数据</li>
-<li>@observe r: 使用此标签监控当数据变化是要更新的Component（组件类） </li>
-<li>autorun : 当观测到的数据发生变化的时候，如果变化的值处在autorun中，那么autorun就会自动执行。 </li>
-<li>@action : 使用此标签监控数据改变的自定义方法(当在需要数据改变的时候执行此自定义方法，那么View层也会跟着自动变化，默认此View层已经使用@observer标签监控) </li>
-<li>useStrict : 使用严格模式 </li>
-<li>@computed : 计算值(computed values)是可以根据现有的状态或其它计算值衍生出的值,可以定义在相关数据发生变化时自动更新的值.</li>
-</ul>
 </li>
 </ol>
 
@@ -1831,8 +1989,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">17</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -1886,11 +2044,11 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
-  Theme -
+  Thème -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Muse
   </a>
