@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="转自-Java垃圾回收机制 转自-Java垃圾回收机制  垃圾回收机制  垃圾回收机制是Java语音中的一大特点，他会自动回收、释放没有被使用的内存，程序员不需要自己手动去管理内存。有效的防止的了内存溢出。 内存溢出 对象使用的内存大小超出了分配的内存大小   内存泄漏 长期持有某一对象，导致垃圾回收器无法回收，从而导致内存泄漏     垃圾回收机制中的算法  Java语言规范没有明确地说明JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java垃圾回收机制">
+<meta property="og:url" content="http://yoursite.com/2018/08/09/Java垃圾回收机制/index.html">
+<meta property="og:site_name" content="gujingjing">
+<meta property="og:description" content="转自-Java垃圾回收机制 转自-Java垃圾回收机制  垃圾回收机制  垃圾回收机制是Java语音中的一大特点，他会自动回收、释放没有被使用的内存，程序员不需要自己手动去管理内存。有效的防止的了内存溢出。 内存溢出 对象使用的内存大小超出了分配的内存大小   内存泄漏 长期持有某一对象，导致垃圾回收器无法回收，从而导致内存泄漏     垃圾回收机制中的算法  Java语言规范没有明确地说明JVM">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://images0.cnblogs.com/blog2015/694841/201506/141050566294022.jpg">
+<meta property="og:image" content="https://images0.cnblogs.com/i/288799/201406/181024382398115.jpg">
+<meta property="og:image" content="https://images0.cnblogs.com/i/288799/201406/181100129575916.jpg">
+<meta property="og:updated_time" content="2018-08-09T06:57:54.292Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java垃圾回收机制">
+<meta name="twitter:description" content="转自-Java垃圾回收机制 转自-Java垃圾回收机制  垃圾回收机制  垃圾回收机制是Java语音中的一大特点，他会自动回收、释放没有被使用的内存，程序员不需要自己手动去管理内存。有效的防止的了内存溢出。 内存溢出 对象使用的内存大小超出了分配的内存大小   内存泄漏 长期持有某一对象，导致垃圾回收器无法回收，从而导致内存泄漏     垃圾回收机制中的算法  Java语言规范没有明确地说明JVM">
+<meta name="twitter:image" content="https://images0.cnblogs.com/blog2015/694841/201506/141050566294022.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/09/Java垃圾回收机制/"/>
+
+
+
+
+
+  <title>Java垃圾回收机制 | gujingjing</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gujingjing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/09/Java垃圾回收机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gujingjing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gujingjing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java垃圾回收机制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-09T10:38:18+08:00">
+                2018-08-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://www.cnblogs.com/sunniest/p/4575144.html" target="_blank" rel="external">转自-Java垃圾回收机制</a></p>
+<p><a href="https://www.cnblogs.com/dolphin0520/p/3783345.html" target="_blank" rel="external">转自-Java垃圾回收机制</a></p>
+<ol>
+<li><p>垃圾回收机制</p>
+<ul>
+<li>垃圾回收机制是Java语音中的一大特点，他会自动回收、释放没有被使用的内存，程序员不需要自己手动去管理内存。有效的防止的了内存溢出。</li>
+<li><strong>内存溢出</strong><ul>
+<li>对象使用的内存大小超出了分配的内存大小</li>
+</ul>
+</li>
+<li><strong>内存泄漏</strong><ul>
+<li>长期持有某一对象，导致垃圾回收器无法回收，从而导致内存泄漏</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>垃圾回收机制中的算法</p>
+<blockquote>
+<p>Java语言规范没有明确地说明JVM使用哪种垃圾回收算法，但是任何一种垃圾回收算法一般要做2件基本的事情：（1）发现无用信息对象；（2）回收被无用对象占用的内存空间，使该空间可被程序再次使用。　</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li><strong>引用计数法(Reference Counting Collector)</strong><ul>
+<li>算法分析<ul>
+<li>堆中每一个对象都有一个引用计数器</li>
+<li>当对象呗创建，并且被复制给一个引用对象时，计数器设为1</li>
+<li>当任务其他引用对象被设置为该对象，计数器+1</li>
+<li>当对象实例的引用超过生命周期，或者被赋值为新值，计数器-1</li>
+</ul>
+</li>
+<li>优点<ul>
+<li>　　引用计数收集器可以很快的执行，交织在程序运行中。对程序需要不被长时间打断的实时环境比较有利。</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>　　无法检测出循环引用。如父对象有一个对子对象的引用，子对象反过来引用父对象。这样，他们的引用计数永远不可能为0.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class Main &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        MyObject object1 = new MyObject();</div><div class="line">        MyObject object2 = new MyObject();</div><div class="line">         </div><div class="line">        object1.object = object2;</div><div class="line">        object2.object = object1;</div><div class="line">         </div><div class="line">        object1 = null;</div><div class="line">        object2 = null;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>根搜索算法</strong><br><img src="https://images0.cnblogs.com/blog2015/694841/201506/141050566294022.jpg" alt=""></li>
+</ul>
+<pre><code>- 程序将所有的引用制作成一张表
+- 从一个GC Root 节点开始，搜索对应的引用节点
+- 找到这个节点后，继续寻找该节点的引用节点
+- 当所有的引用节点被找完之后，剩余的其他节点未为引用节点，就是无用节点
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Java中可以作为GC Root节点的有</div><div class="line">1. 虚拟机栈中引用的对象（本地变量表）</div><div class="line">2. 方法区中静态属性引用的对象</div><div class="line">3. 方法区中常量引用的对象</div><div class="line">4. 本地方法栈中引用的对象（Native对象）</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>标记清除算法</strong><ul>
+<li>从根集合开始扫描，标记所有存活的对象</li>
+<li>标记完后，扫描整个空间，找出为标记的对象，进行回收</li>
+<li>标记清除算法，只清除为存活的对象，会产生内存碎片<br><img src="https://images0.cnblogs.com/i/288799/201406/181024382398115.jpg" alt=""></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><strong>compacting(复制)算法</strong></p>
+<ul>
+<li>先将内存划分为大小相等的两块</li>
+<li>每次只使用一块，当这块内存用完，将还存活的对象复制到另外一块区域</li>
+<li>然后把已经使用的区域全部清理掉</li>
+<li>这种算法虽然实现简单，运行高效且不容易产生内存碎片，但是却对内存空间的使用做出了高昂的代价，因为能够使用的内存缩减到原来的一半。</li>
+</ul>
+</li>
+<li><p><strong>标记整理算法</strong></p>
+<ul>
+<li>算法在标记的时候和标记清除一样</li>
+<li>标记完成之后，不是直接回收所有对象,而是将所有可回收对象移动到某一端</li>
+<li>然后清理掉边界意外的内存，如下图</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://images0.cnblogs.com/i/288799/201406/181100129575916.jpg" alt=""></p>
+<ul>
+<li><strong>.Generational Collection（分代收集）算法</strong><ul>
+<li>分代收集算法是目前大部分JVM垃圾回收机制使用的算法</li>
+<li>根据对象存活的生命周期，将堆分为几种状态<ul>
+<li>新生代(Young Generation)<ul>
+<li>新生代的特点，每次垃圾回收的时候，有大量的对象会被回收</li>
+</ul>
+</li>
+<li>老生代(Tenured Generation)<ul>
+<li>老年代的特点就是每次垃圾回收的时候，只有少部分对象会被回收</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>- 新生代算法
+    * 新生带，算法和copying复制算法类似
+    * 因为新生代中每次垃圾回收都要回收大部分对象，也就是说需要复制的操作次数较少
+    * 实际使用的时候不会按照1:1比例分配
+    * 实际会分成一块大的Eden空间和两块较小的Survivor空间
+    * 每次使用eden空间和一块survivor空间
+    * 当回收的时候，将eden、servivor中存活的对象复制到另一块survivor中，清除eden以及刚刚使用过的servivor空间
+
+- **新生代移动到老生代**
+    * 当对象在Survivor区躲过一次GC的话，其对象年龄便会加1
+    * 默认情况下，如果对象年龄达到15岁，就会移动到老年代中。
+
+
+- 老生代算法
+    * 由于老生代回收的时候，只有很少的对象需要回收，使用的是标记整理算法
+
+- 永生代
+    * 在堆区之外还有一个代就是永久代（Permanet Generation），它用来存储class类、常量、方法描述等。
+    * 对永久代的回收主要回收两部分内容：**废弃常量和无用的类**
+</code></pre><blockquote>
+<p>年轻代（Young Generation）<br>　　1.所有新生成的对象首先都是放在年轻代的。年轻代的目标就是尽可能快速的收集掉那些生命周期短的对象。<br>　　2.新生代内存按照8:1:1的比例分为一个eden区和两个survivor(survivor0,survivor1)区。一个Eden区，两个 Survivor区(一般而言)。大部分对象在Eden区中生成。回收时先将eden区存活对象复制到一个survivor0区，然后清空eden区，当这个survivor0区也存放满了时，则将eden区和survivor0区存活对象复制到另一个survivor1区，然后清空eden和这个survivor0区，此时survivor0区是空的，然后将survivor0区和survivor1区交换，即保持survivor1区为空， 如此往复。<br>　　3.当survivor1区不足以存放 eden和survivor0的存活对象时，就将存活对象直接存放到老年代。若是老年代也满了就会触发一次Full GC，也就是新生代、老年代都进行回收<br>　　4.新生代发生的GC也叫做Minor GC，MinorGC发生频率比较高(不一定等Eden区满了才触发)<br>年老代（Old Generation）<br>　　1.在年轻代中经历了N次垃圾回收后仍然存活的对象，就会被放到年老代中。因此，可以认为年老代中存放的都是一些生命周期较长的对象。<br>　　2.内存比新生代也大很多(大概比例是1:2)，当老年代内存满时触发Major GC即Full GC，Full GC发生频率比较低，老年代对象存活时间比较长，存活率标记高。<br>持久代（Permanent Generation）<br>　　用于存放静态文件，如Java类、方法等。持久代对垃圾回收没有显著影响，但是有些应用可能动态生成或者调用一些class，例如Hibernate 等，在这种时候需要设置一个比较大的持久代空间来存放这些运行过程中新增的类。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/08/Java虚拟机/" rel="next" title="Android、Java虚拟机">
+                <i class="fa fa-chevron-left"></i> Android、Java虚拟机
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/09/JavaLruCache/" rel="prev" title="JavaLruCache">
+                JavaLruCache <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="gujingjing" />
+          <p class="site-author-name" itemprop="name">gujingjing</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gujingjing</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

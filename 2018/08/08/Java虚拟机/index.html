@@ -94,17 +94,19 @@
 
 
 
-<meta name="description" content="补充 - WebViewClient     - WebViewClient主要帮助WebView处理各种通知、请求事件的，比如：         - shouldOverrideUrlLoading         - onLoadResource         - onPageStart         - onPageFinish         - onReceiveError">
+<meta name="description" content="转自-Java虚拟机与Android虚拟机区别 补充  编译技术 JNI (Just In Time，即时编译技术) 与Dalvik虚拟机相关 执行慢一点 安装快 占空间小一点 运行时编辑，在运行时期一边将dex解析为机器语言 AOT (Ahead Of Time，预编译技术) 指的就是ART(Anroid RunTime)这种运行方式。 执行快 安装慢 占内存占外存大 预编译，在安装的时候，将d">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Js与Webview交互">
-<meta property="og:url" content="http://yoursite.com/2018/08/08/与Webview交互/index.html">
+<meta property="og:title" content="Android、Java虚拟机">
+<meta property="og:url" content="http://yoursite.com/2018/08/08/Java虚拟机/index.html">
 <meta property="og:site_name" content="gujingjing">
-<meta property="og:description" content="补充 - WebViewClient     - WebViewClient主要帮助WebView处理各种通知、请求事件的，比如：         - shouldOverrideUrlLoading         - onLoadResource         - onPageStart         - onPageFinish         - onReceiveError">
+<meta property="og:description" content="转自-Java虚拟机与Android虚拟机区别 补充  编译技术 JNI (Just In Time，即时编译技术) 与Dalvik虚拟机相关 执行慢一点 安装快 占空间小一点 运行时编辑，在运行时期一边将dex解析为机器语言 AOT (Ahead Of Time，预编译技术) 指的就是ART(Anroid RunTime)这种运行方式。 执行快 安装慢 占内存占外存大 预编译，在安装的时候，将d">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-08T07:23:11.368Z">
+<meta property="og:image" content="https://images0.cnblogs.com/i/288799/201405/281726404166686.jpg">
+<meta property="og:updated_time" content="2018-08-09T02:36:44.517Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Js与Webview交互">
-<meta name="twitter:description" content="补充 - WebViewClient     - WebViewClient主要帮助WebView处理各种通知、请求事件的，比如：         - shouldOverrideUrlLoading         - onLoadResource         - onPageStart         - onPageFinish         - onReceiveError">
+<meta name="twitter:title" content="Android、Java虚拟机">
+<meta name="twitter:description" content="转自-Java虚拟机与Android虚拟机区别 补充  编译技术 JNI (Just In Time，即时编译技术) 与Dalvik虚拟机相关 执行慢一点 安装快 占空间小一点 运行时编辑，在运行时期一边将dex解析为机器语言 AOT (Ahead Of Time，预编译技术) 指的就是ART(Anroid RunTime)这种运行方式。 执行快 安装慢 占内存占外存大 预编译，在安装的时候，将d">
+<meta name="twitter:image" content="https://images0.cnblogs.com/i/288799/201405/281726404166686.jpg">
 
 
 
@@ -133,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/08/08/与Webview交互/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/08/Java虚拟机/"/>
 
 
 
 
 
-  <title>Js与Webview交互 | gujingjing</title>
+  <title>Android、Java虚拟机 | gujingjing</title>
   
 
 
@@ -262,7 +264,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/08/与Webview交互/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/08/Java虚拟机/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gujingjing">
@@ -279,7 +281,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Js与Webview交互</h1>
+          <h1 class="post-title" itemprop="name headline">Android、Java虚拟机</h1>
         
 
         <div class="post-meta">
@@ -291,7 +293,7 @@
               
                 <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-08T10:43:58+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-08T17:19:37+08:00">
                 2018-08-08
               </time>
             
@@ -329,177 +331,137 @@
       
 
       
-        <p><strong>补充</strong></p>
-<pre><code>- WebViewClient
-    - WebViewClient主要帮助WebView处理各种通知、请求事件的，比如：
-        - shouldOverrideUrlLoading
-        - onLoadResource
-        - onPageStart
-        - onPageFinish
-        - onReceiveError
-        - onReceivedHttpAuthRequest
-- WebChromeClient
-    -WebChromeClient主要辅助WebView处理Javascript的对话框、网站图标、网站title、加载进度等比如
-    - onCloseWindow(关闭WebView)
-    - onCreateWindow()
-    - onJsAlert (WebView上alert无效，需要定制WebChromeClient处理弹出)
-    - onJsPrompt
-    - onJsConfirm
-    - onProgressChanged
-    - onReceivedIcon
-    - onReceivedTitle
-</code></pre><ol>
-<li><p>Android与JS交互的几种方式</p>
+        <p><a href="https://www.jianshu.com/p/8edac8e09b3e" target="_blank" rel="external">转自-Java虚拟机与Android虚拟机区别</a></p>
+<p><strong>补充</strong></p>
 <ul>
-<li>webView.addJavascriptInterface(object,name)<ul>
-<li>通过向js中注入一个对象</li>
-<li>js通过window.name获取到对象，即可调用对象中的方法</li>
-<li><strong>漏洞</strong><ul>
-<li>在Javascript代码中，利用Java反射机制，通过interfaceObject获取当前Runtime对象引用，并调用其exec方法执行nc命令连接服务器8088及8089端口。</li>
-<li><a href="https://www.jianshu.com/p/6309d243e4c0" target="_blank" rel="external">漏洞说明引用</a></li>
+<li>编译技术<ul>
+<li>JNI (Just In Time，即时编译技术) 与Dalvik虚拟机相关</li>
+<li>执行慢一点 安装快 占空间小一点</li>
+<li>运行时编辑，在运行时期一边将dex解析为机器语言</li>
+<li>AOT (Ahead Of Time，预编译技术) 指的就是ART(Anroid RunTime)这种运行方式。<ul>
+<li>执行快 安装慢 占内存占外存大</li>
+<li>预编译，在安装的时候，将dex解析为机器语言</li>
+</ul>
+</li>
+<li>ART <ul>
+<li>ART虚拟机执行的是本地机器码</li>
+<li>优点<ul>
+<li>系统性能显著提升</li>
+<li>应用启动更快、运行更快、体验更流畅、触感反馈更及时</li>
+<li>续航能力提升</li>
+<li>支持更低的硬件</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>更大的存储空间占用，可能增加10%-20%</li>
+<li>更长的应用安装时间</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>WebViewClient.shouldOverrideUrlLoading()<ul>
-<li>通过自定义 webViewClient中的shouldOverrideUrlLoading方法</li>
-<li>监听当前正在加载的url地址</li>
-<li>通过解析url来做出相应操作</li>
-</ul>
-</li>
-<li>WebChromeClient.onJsAlert()/onJsConfirm()/onJsPrompt() 方法分别回调拦截JS对话框alert()、confirm()、prompt()消息<ul>
-<li>alert() 弹出个提示框 （确定） </li>
-<li>confirm() 弹出个确认框 （确定，取消） </li>
-<li>prompt() 弹出个输入框 让你输入东西</li>
-<li>通过自定义webViewChromClient</li>
-<li>主要是监听message 解析，做对应操作</li>
 </ul>
 </li>
 </ul>
-</li>
-<li><p>Android调用Js方法</p>
-<ul>
-<li>webView.loadUrl()<ul>
-<li>mWebView.loadUrl(“javascript:callJS()”);</li>
-</ul>
-</li>
-<li>mWebView.evaluateJavascript 使用如下</li>
-<li>此方法只支持android 4.4以上</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">    mWebView.evaluateJavascript（&quot;javascript:callJS()&quot;, new ValueCallback&lt;String&gt;() &#123;</div><div class="line">        @Override</div><div class="line">        public void onReceiveValue(String value) &#123;</div><div class="line">            //此处为 js 返回的结果</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="JsBridge源码解析"><a href="#JsBridge源码解析" class="headerlink" title="JsBridge源码解析"></a>JsBridge源码解析</h3><p><a href="https://github.com/lzyzsd/JsBridge" target="_blank" rel="external">JsBridgeGithub传送门</a></p>
-<p><a href="https://www.jianshu.com/p/e4f7fb571cc0" target="_blank" rel="external">转自Android与JsBridge使用原理</a></p>
-<p>JsBridge重要的三点:</p>
+<p>####总结</p>
+<p>通过前面背景知识的介绍，我终于可以更简单的介绍这四个名词之间的关系了：</p>
+<p>JIT代表运行时编译策略，也可以理解成一种运行时编译器，是为了加快Dalvik虚拟机解释dex速度提出的一种技术方案，来缓存频繁使用的本地机器码<br>ART和Dalvik都算是一种Android运行时环境，或者叫做虚拟机，用来解释dex类型文件。但是ART是安装时解释，Dalvik是运行时解释<br>AOT可以理解为一种编译策略，即运行前编译，ART虚拟机的主要特征就是AOT</p>
 <ol>
-<li>Android调用JS是通过loadUrl(url),url中可以拼接要传给JS的对象</li>
-<li>JS调用Android是通过shouldOverrideUrlLoading</li>
-<li>JsBridge将沟通数据封装成Message，然后放进Queue,再将Queue进行传输</li>
+<li>Java虚拟机<ul>
+<li>JVM(Java Virtual Machine)</li>
+<li>java代码编译生成的.class字节码文件，通过JVM虚拟机转化成机器语言运行</li>
+<li>JVM的作用是把平台无关的.class里面的字节码翻译成平台相关的机器码，来实现跨平台。</li>
+</ul>
+</li>
+<li><p>Android虚拟机</p>
+<ul>
+<li>DVM(Dalvik Virtual Machine)    JNI</li>
+<li>ART(Anroid RunTime)(Android 4.4 之后用来替换Dalvik虚拟)    AOT</li>
+</ul>
+</li>
+<li><p>JVM和DVM虚拟机的区别</p>
+<ul>
+<li>Jvm运行的是java字节码, Dalvik虚拟机运行的Dalvik字节码<ul>
+<li>JAVA程序经过编译，生成JAVA字节码保存在class文件中，JVM通过解码class文件中的内容来运行程序。而DVM运行的是Dalvik字节码，所有的Dalvik字节码由JAVA字节码转换而来，并被打包到一个DEX（Dalvik Executable）可执行文件中，DVM通过解释DEX文件来执行这些字节码。</li>
+</ul>
+</li>
+<li>Dalvik可执行文件体积更小</li>
+<li>JVM基于栈，DVM基于寄存器</li>
+</ul>
+</li>
 </ol>
-<p><strong>BridgeWebview</strong></p>
+<p>####JVM内存管理<br><a href="https://www.cnblogs.com/dolphin0520/p/3613043.html" target="_blank" rel="external">引用自-JVM运行时存储</a></p>
+<blockquote>
+<p>首先Java源代码文件(.java后缀)会被Java编译器编译为字节码文件(.class后缀)，然后由JVM中的类加载器加载各个类的字节码文件，加载完毕之后，交由JVM执行引擎执行。在整个程序执行过程中，JVM会用一段空间来存储程序执行期间需要用到的数据和相关信息，这段空间一般被称作为Runtime Data Area（运行时数据区），也就是我们常说的JVM内存。因此，在Java中我们常常说到的内存管理就是针对这段空间进行管理（如何分配和回收内存空间）。</p>
+</blockquote>
+<p>java运行时数据区域包括如下几个部分</p>
 <ul>
-<li>queueMessage()消息队列方法<ul>
-<li>先判断startMsg数组<ul>
-<li>这边startMsg是在js界面还未加载完，之前调用的消息</li>
-<li>在onpageFinish()会将所有消息分发，并将startMsg致空</li>
+<li>Java栈(VM Stack)</li>
+<li>堆(Heap)</li>
+<li>本地方法栈(Native Method Stack)</li>
+<li>程序计数器(Program Counter Register)</li>
+<li>方法区(Method Area)</li>
 </ul>
-</li>
-<li>init()方法<ul>
-<li>设置了默认的setWebViewClient()<ul>
-<li>监听了加载的url,重新了shouldOverrideUrlLoading()方法</li>
-<li>在页面onPageFinish()加载结束的时候<ul>
-<li>向js中注入一端js代码(WebViewJavascriptBridge.js)</li>
-<li>判断当前webview中是否有未分发出去的msg,分发出去，并致空</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>bridgeWebview中有两个map<ul>
-<li>Map<string, callbackfunction=""> responseCallbacks<ul>
-<li>存放callbackId 和CallBackFunction 回调处理方法</li>
-<li>js结果返回处理</li>
-</ul>
-</string,></li>
-<li>Map<string, bridgehandler=""> messageHandlers<ul>
-<li>存放handleName和handle处理方法</li>
-<li>提供给js调用的</li>
-</ul>
-</string,></li>
-</ul>
-</li>
-</ul>
-<p><strong>WebViewJavascriptBridge.js</strong></p>
+<p><img src="https://images0.cnblogs.com/i/288799/201405/281726404166686.jpg" alt=""></p>
+<ol>
+<li><p>程序计数器</p>
 <ul>
-<li>主要的作用是向window中添加WebViewJavascriptBridge对象</li>
-<li>提供给html界面的调用</li>
-<li>创建了一个WebViewJavascriptBridgeReady完成事件<ul>
-<li>document.createEvent(‘Events’);</li>
-<li>在WebViewJavascriptBridge.js加载完成的时候分发事件</li>
+<li>是cpu中的寄存器，是用来记住当前程序执行的位置</li>
+<li>由于在JVM中，多线程是通过线程轮流切换来获得CPU执行时间的，因此，在任一具体时刻，一个CPU的内核只会执行一条线程中的指令，因此，为了能够使得每个线程都在线程切换后能够恢复在切换之前的程序执行位置，每个线程都需要有自己独立的程序计数器，并且不能互相被干扰，否则就会影响到程序的正常执行次序。因此，可以这么说，程序计数器是每个线程所私有的。</li>
+<li>由于程序计数器中存储的数据所占空间的大小不会随程序的执行而发生改变，因此，对于程序计数器是不会发生内存溢出现象(OutOfMemory)的。</li>
+<li>在JVM规范中规定，如果线程执行的是非native方法，则程序计数器中保存的是当前需要执行的指令的地址；如果线程执行的是native方法，则程序计数器中的值是undefined。</li>
 </ul>
 </li>
-</ul>
-<p>#####Java调用JS流程</p>
+<li><p>Java栈</p>
+</li>
+</ol>
+<p>java栈内存区主要的存放对象如下</p>
 <ul>
-<li>Java层,bridgeWebview先设置好默认参数<ul>
-<li>设置setDefaultHandler() 设置默认没有handleName的返回处理</li>
-<li>加载url</li>
-<li>webview.registerHandler() 注入方法提供给js调用</li>
+<li>局部变量表 <ul>
+<li>就是用来存储方法中的局部变量（包括在方法中声明的非静态变量以及函数形参）。对于基本数据类型的变量，则直接存储它的值，对于引用类型的变量，则存的是指向对象的引用。局部变量表的大小在编译器就可以确定其大小了，因此在程序执行期间局部变量表的大小是不会改变的。</li>
 </ul>
 </li>
-<li>Js层<ul>
-<li>在demo.html中 添加了connectWebViewJavascriptBridge方法<ul>
-<li>第一次加载的时候，获取不到WebViewJavascriptBridge<ul>
-<li>添加事件(WebViewJavascriptBridgeReady)bridge完成事件</li>
-<li>在WebViewJavascriptBridge.js完成，发出完成事件的时候，重新处理callback</li>
+<li>操作数栈<ul>
+<li>程序中的所有计算过程都是在借助于操作数栈来完成的</li>
 </ul>
 </li>
-<li>在收到事件重新处理callBack的时候WebViewJavascriptBridge不为空</li>
-<li>callBack中主要做俩大事情<ul>
-<li>bridge.init()<ul>
-<li>添加js端默认的messageHandler消息处理</li>
-<li>这个处理和java webview中的ponpageFinish()一样</li>
+<li>指向运行时常量池的引用<ul>
+<li>因为在方法执行的过程中有可能需要用到类中的常量，所以必须要有一个引用指向运行时常量。</li>
 </ul>
 </li>
-<li>bridge.registerHandler()<ul>
-<li>向bridge中注入方法提供给java调用</li>
+<li>方法返回地址<ul>
+<li>当一个方法执行完毕之后，要返回之前调用它的地方，因此在栈帧中必须保存一个方法返回地址。</li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>至此，两端的通信才算建立完成</li>
-</ul>
-<p>#####Java调用JS流程</p>
+<ol>
+<li><p>本地方法栈</p>
 <ul>
-<li>webview.callHandler()<ul>
-<li>内部会调用doSend()<ul>
-<li>根据handleName、data、callback组装出msg</li>
-<li>创建一个callbackId ,将id和callBackFunction存放在map中</li>
-<li>msg中也存入一份callbackId</li>
-<li>发送消息<ul>
-<li>在主线程中调用 webview.loadUrl()调用js代码</li>
+<li>本地方法栈与Java栈的作用和原理非常相似。区别只不过是Java栈是为执行Java方法服务的，而本地方法栈则是为执行本地方法（Native Method）服务的。在JVM规范中，并没有对本地方发展的具体实现方法以及数据结构作强制规定，虚拟机可以自由实现它。在HotSopt虚拟机中直接就把本地方法栈和Java栈合二为一。</li>
+</ul>
+</li>
+<li><p>堆</p>
+<ul>
+<li>主要存放的是对象、和数组(他们的引用存放在栈中)</li>
+<li>java内存回收机制会自行内存回收，堆内存是主要回收的区域</li>
+<li>堆内存区域是所有线程共享的,JVM中只有一个堆内存</li>
+</ul>
+</li>
+<li><p>方法区</p>
+<ul>
+<li>方法区也是JVM中非常重要的区域，它和堆一样，被线程所共享</li>
+<li><strong>在方法区中存放了每个类的信息,包括类的名称、方法信息、字段信息。静态变量、常量以及编译后的代码</strong></li>
+<li>常量池<ul>
+<li>Java中几种常量池的区分<ul>
+<li>全局字符串池（string pool也有叫做string literal pool）</li>
+<li>class文件常量池（class constant pool）</li>
+<li>运行时常量池（runtime constant pool）</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li>js中的WebViewJavascriptBridge.js<ul>
-<li>_handleMessageFromNative()方法会接受到调用的msg</li>
-<li>在js中根据handleName去除对应的handle做处理</li>
-<li>处理结束将responseId:callbackId 和结果一起返回</li>
-<li>根据双方有responseId 和 callbackId 判断是发送还是请求</li>
-</ul>
-</li>
-</ul>
+</ol>
 
       
     </div>
@@ -524,8 +486,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/07/Java集合/" rel="next" title="Java集合">
-                <i class="fa fa-chevron-left"></i> Java集合
+              <a href="/2018/08/08/ReactNative接入/" rel="next" title="ReactNative接入">
+                <i class="fa fa-chevron-left"></i> ReactNative接入
               </a>
             
           </div>
@@ -534,8 +496,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/08/08/ReactNative接入/" rel="prev" title="ReactNative接入">
-                ReactNative接入 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/08/09/Java垃圾回收机制/" rel="prev" title="Java垃圾回收机制">
+                Java垃圾回收机制 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -588,17 +550,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -642,22 +595,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JsBridge源码解析"><span class="nav-number">1.</span> <span class="nav-text">JsBridge源码解析</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
